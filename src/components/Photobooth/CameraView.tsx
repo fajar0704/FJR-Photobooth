@@ -50,15 +50,29 @@ export default function CameraView({
 
       const constraints: MediaStreamConstraints = {
         video: {
-          width: { ideal: 1280 },
-          height: { ideal: 960 },
+          width: { ideal: 1920, min: 1280 },
+          height: { ideal: 1080, min: 720 },
           deviceId: deviceId ? { exact: deviceId } : undefined,
           facingMode: deviceId ? undefined : "user",
         },
         audio: false,
       };
 
-      const stream = await navigator.mediaDevices.getUserMedia(constraints);
+      let stream: MediaStream;
+      try {
+        stream = await navigator.mediaDevices.getUserMedia(constraints);
+      } catch {
+        // Fallback to flexible video constraints if webcam doesn't support 1080p
+        stream = await navigator.mediaDevices.getUserMedia({
+          video: {
+            width: { ideal: 1280 },
+            height: { ideal: 960 },
+            deviceId: deviceId ? { exact: deviceId } : undefined,
+            facingMode: deviceId ? undefined : "user",
+          },
+          audio: false,
+        });
+      }
       streamRef.current = stream;
 
       if (videoRef.current) {
@@ -138,16 +152,27 @@ export default function CameraView({
   }, [countdown, captureFrame]);
 
   return (
-    <div className="relative w-full max-w-4xl mx-auto rounded-3xl overflow-hidden bg-black shadow-2xl border border-zinc-800">
+    <div className="relative w-full max-w-4xl mx-auto rounded-3xl overflow-hidden bg-black shadow-2xl border border-[#2a2725] transition-all">
       {/* Aspect Ratio Container (4:3 camera frame) */}
       <div className="relative w-full aspect-[4/3] bg-zinc-950 flex items-center justify-center overflow-hidden">
-        {/* Live Video Feed */}
+        {/* Viewfinder Framing Corner Brackets */}
+        <div className="absolute inset-4 sm:inset-6 pointer-events-none z-10 opacity-70">
+          <div className="absolute top-0 left-0 w-5 h-5 border-t-2 border-l-2 border-white/80 rounded-tl-sm shadow-xs" />
+          <div className="absolute top-0 right-0 w-5 h-5 border-t-2 border-r-2 border-white/80 rounded-tr-sm shadow-xs" />
+          <div className="absolute bottom-0 left-0 w-5 h-5 border-b-2 border-l-2 border-white/80 rounded-bl-sm shadow-xs" />
+          <div className="absolute bottom-0 right-0 w-5 h-5 border-b-2 border-r-2 border-white/80 rounded-br-sm shadow-xs" />
+          {/* Subtle center focus mark */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 rounded-full border border-white/20 flex items-center justify-center pointer-events-none">
+            <div className="w-1.5 h-1.5 rounded-full bg-white/40" />
+          </div>
+        </div>
+        {/* Live Video Feed (Sharp, crisp, zero blur) */}
         <video
           ref={videoRef}
           playsInline
           muted
           autoPlay
-          className={`w-full h-full object-cover transition-all duration-300 ${
+          className={`w-full h-full object-cover select-none ${
             settings.mirrored ? "scale-x-[-1]" : ""
           }`}
           style={{
@@ -178,35 +203,35 @@ export default function CameraView({
         )}
 
         {/* Top Floating Controls Bar */}
-        <div className="absolute top-4 left-4 right-4 z-20 flex justify-between items-center">
+        <div className="absolute top-2 sm:top-4 left-2 sm:left-4 right-2 sm:right-4 z-20 flex justify-between items-center">
           {/* Progress Pill */}
-          <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-white text-xs md:text-sm font-semibold shadow-lg">
-            <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse" />
+          <div className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-white text-[11px] sm:text-xs md:text-sm font-semibold shadow-lg">
+            <span className="w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full bg-sky-400 animate-pulse" />
             <span>
               Foto {Math.min(currentShot, totalShots)} dari {totalShots}
             </span>
           </div>
 
           {/* Quick Toolbar */}
-          <div className="flex items-center gap-2 bg-black/60 backdrop-blur-md border border-white/10 rounded-full px-3 py-1.5 text-white">
+          <div className="flex items-center gap-1.5 sm:gap-2 bg-black/60 backdrop-blur-md border border-white/10 rounded-full px-2.5 sm:px-3 py-1 sm:py-1.5 text-white">
             {/* Grid Toggle */}
             <button
               onClick={() => setShowGrid(!showGrid)}
               title="Toggle Grid Panduan"
-              className={`p-2 rounded-full hover:bg-white/20 transition-colors ${
-                showGrid ? "text-primary" : "text-zinc-300"
+              className={`p-1.5 sm:p-2 rounded-full hover:bg-white/20 transition-colors ${
+                showGrid ? "text-sky-400" : "text-zinc-300"
               }`}
             >
-              <Grid className="w-4 h-4" />
+              <Grid className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </button>
 
-            {/* Sound Toggle */}
+            {/* Sound Effects Toggle */}
             <button
               onClick={toggleSound}
-              title={soundEnabled ? "Matikan Suara" : "Nyalakan Suara"}
-              className="p-2 rounded-full hover:bg-white/20 transition-colors text-zinc-300"
+              title={soundEnabled ? "Matikan Efek Suara" : "Nyalakan Efek Suara"}
+              className="p-1.5 sm:p-2 rounded-full hover:bg-white/20 transition-colors text-zinc-300 cursor-pointer"
             >
-              {soundEnabled ? <Volume2 className="w-4 h-4 text-emerald-400" /> : <VolumeX className="w-4 h-4 text-zinc-500" />}
+              {soundEnabled ? <Volume2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400" /> : <VolumeX className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-zinc-500" />}
             </button>
 
             {/* Switch Camera Dropdown if multiple */}
@@ -214,7 +239,7 @@ export default function CameraView({
               <select
                 value={selectedDeviceId}
                 onChange={(e) => handleDeviceChange(e.target.value)}
-                className="bg-transparent text-xs text-white border-0 outline-none cursor-pointer pr-2"
+                className="bg-transparent text-[11px] sm:text-xs text-white border-0 outline-none cursor-pointer pr-1 sm:pr-2"
               >
                 {devices.map((device, idx) => (
                   <option key={device.deviceId} value={device.deviceId} className="bg-zinc-900 text-white">
@@ -226,14 +251,17 @@ export default function CameraView({
           </div>
         </div>
 
-        {/* Giant Countdown Overlay */}
+        {/* Giant Countdown Overlay (Crystal-clear, sharp, no blur over video) */}
         {countdown !== null && countdown > 0 && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center z-30 pointer-events-none bg-black/40 backdrop-blur-[2px]">
-            <div className="flex items-center justify-center w-32 h-32 md:w-40 md:h-40 rounded-full bg-[#c83d3d] border-4 border-white/40 text-white font-mono font-black text-6xl md:text-8xl shadow-2xl animate-scale">
+          <div className="absolute inset-0 flex flex-col items-center justify-center z-30 pointer-events-none bg-transparent">
+            <div
+              key={countdown}
+              className="flex items-center justify-center w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 rounded-full bg-gradient-to-br from-blue-600 via-sky-600 to-indigo-600 border-4 border-white text-white font-mono font-black text-6xl sm:text-7xl md:text-8xl shadow-[0_0_60px_rgba(56,189,248,0.7),0_10px_30px_rgba(0,0,0,0.8)] animate-count-pop"
+            >
               {countdown}
             </div>
-            <p className="mt-4 text-white text-xs md:text-sm font-mono tracking-widest uppercase drop-shadow-md">
-              Bersiap & Tersenyum
+            <p className="mt-4 px-3.5 py-1 rounded-full bg-black/60 border border-white/20 text-white text-xs md:text-sm font-mono tracking-[0.25em] uppercase shadow-xl animate-pulse">
+              Bersiap & Tersenyum ✨
             </p>
           </div>
         )}
@@ -242,7 +270,7 @@ export default function CameraView({
         {hasPermission === false && (
           <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center z-30 bg-zinc-950/95 backdrop-blur-md">
             <div className="w-14 h-14 rounded-xl bg-stone-800 text-stone-300 flex items-center justify-center mb-4 border border-stone-700">
-              <AlertCircle className="w-7 h-7 text-[#c83d3d]" />
+              <AlertCircle className="w-7 h-7 text-sky-400" />
             </div>
             <h3 className="text-lg font-bold text-white mb-2">Akses Kamera Belum Diberikan</h3>
             <p className="text-zinc-400 text-xs md:text-sm max-w-md mb-6 leading-relaxed">
@@ -300,7 +328,7 @@ export default function CameraView({
                 key={idx}
                 className={`relative w-14 h-14 md:w-16 md:h-16 rounded-xl overflow-hidden border-2 transition-all duration-300 bg-zinc-900 flex items-center justify-center ${
                   isCurrent
-                    ? "border-[#c83d3d] ring-4 ring-[#c83d3d]/30 scale-105"
+                    ? "border-sky-400 ring-4 ring-sky-400/35 shadow-lg shadow-sky-500/25 scale-105"
                     : photo
                     ? "border-emerald-500 shadow-md"
                     : "border-white/20 opacity-60"

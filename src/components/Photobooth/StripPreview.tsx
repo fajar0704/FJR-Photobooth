@@ -22,7 +22,7 @@ export default function StripPreview({
     <div className="flex justify-center items-center p-2 sm:p-4 w-full">
       {/* Photostrip Card Container */}
       <div
-        className={`relative transition-all duration-300 rounded-2xl shadow-xl overflow-hidden max-w-full ${
+        className={`relative transition-all duration-500 rounded-2xl shadow-2xl overflow-hidden max-w-full hover:scale-[1.01] ${
           isGrid ? "w-full max-w-[340px] sm:max-w-[420px] p-4 sm:p-5" : "w-full max-w-[240px] sm:max-w-[280px] p-3.5 sm:p-4"
         }`}
         style={{
@@ -63,7 +63,7 @@ export default function StripPreview({
               <img
                 src={photo}
                 alt={`Photobooth shot ${idx + 1}`}
-                className="w-full h-full object-cover transition-all duration-200"
+                className="w-full h-full object-cover transition-all duration-300 group-hover:scale-105"
                 style={{
                   filter: filter.cssFilter,
                 }}

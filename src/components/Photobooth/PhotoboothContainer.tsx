@@ -78,10 +78,9 @@ export default function PhotoboothContainer() {
     setCurrentShotIndex(0);
     setRetakeIndex(null);
     setPhase("capturing");
-    // Brief 500ms delay to let UI transition before first countdown
     setTimeout(() => {
       runCountdownForShot();
-    }, 600);
+    }, 400);
   };
 
   // Called by CameraView when a frame is captured at countdown 0
@@ -106,16 +105,16 @@ export default function PhotoboothContainer() {
       setCurrentShotIndex(nextIndex);
 
       if (nextIndex < settings.photoCount) {
-        // Prepare next shot after 1.4s breather
+        // Breather pause (1.2s), then start next countdown cleanly
         setTimeout(() => {
           runCountdownForShot();
-        }, 1400);
+        }, 1200);
       } else {
         // Finished all photos!
         setTimeout(() => {
           sounds.playComplete();
           setPhase("review");
-        }, 800);
+        }, 600);
       }
 
       return next;
@@ -137,7 +136,7 @@ export default function PhotoboothContainer() {
     setPhase("capturing");
     setTimeout(() => {
       runCountdownForShot();
-    }, 600);
+    }, 400);
   };
 
   // Fallback demo photos if no webcam
@@ -146,10 +145,10 @@ export default function PhotoboothContainer() {
     const demoPhotos = [
       "/images/demo_1.jpg",
       "/images/gallery_strip.jpg",
-      "/images/hero.jpg",
+      "/images/fotsud.jpg",
       "/images/demo_1.jpg",
       "/images/gallery_strip.jpg",
-      "/images/hero.jpg",
+      "/images/fotsud.jpg",
     ].slice(0, settings.photoCount);
 
     setCapturedPhotos(demoPhotos);
@@ -183,22 +182,22 @@ export default function PhotoboothContainer() {
   return (
     <div className="w-full">
       {/* Session Progress Stepper Header */}
-      <div className="max-w-4xl mx-auto mb-6 flex items-center justify-between px-4">
-        <div className="flex items-center gap-3">
+      <div className="max-w-4xl mx-auto mb-4 sm:mb-6 flex items-center justify-between px-2 sm:px-4">
+        <div className="flex items-center gap-2 sm:gap-3">
           <div
-            className={`w-7 h-7 rounded-lg flex items-center justify-center font-bold text-xs ${
+            className={`w-7 h-7 rounded-xl flex items-center justify-center font-bold text-xs shadow-sm ${
               phase === "idle" || phase === "capturing"
-                ? "bg-stone-950 text-white"
-                : "bg-emerald-600 text-white"
+                ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-blue-500/25 border border-sky-400/30"
+                : "bg-emerald-600 text-white shadow-emerald-500/20"
             }`}
           >
             {phase === "review" ? "✓" : "1"}
           </div>
           <div>
-            <p className="text-xs font-bold text-stone-900">
+            <p className="text-xs font-bold text-stone-100">
               {phase === "review" ? "Foto Selesai" : "Pengambilan Foto"}
             </p>
-            <p className="text-[11px] text-stone-500 font-mono">
+            <p className="text-[10px] sm:text-[11px] text-stone-400 font-mono">
               {phase === "capturing"
                 ? `Foto ${currentShotIndex + 1} dari ${settings.photoCount}`
                 : phase === "review"
@@ -208,9 +207,9 @@ export default function PhotoboothContainer() {
           </div>
         </div>
 
-        <div className="w-16 sm:w-28 h-1 bg-[#e8e2d8] rounded-full overflow-hidden">
+        <div className="w-16 sm:w-28 h-1.5 bg-[#1b2233] rounded-full overflow-hidden border border-white/5">
           <div
-            className="h-full bg-stone-950 transition-all duration-500"
+            className="h-full bg-gradient-to-r from-blue-600 via-sky-500 to-indigo-600 transition-all duration-500"
             style={{
               width:
                 phase === "review"
@@ -222,34 +221,36 @@ export default function PhotoboothContainer() {
           />
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3">
           <div
-            className={`w-7 h-7 rounded-lg flex items-center justify-center font-bold text-xs ${
+            className={`w-7 h-7 rounded-xl flex items-center justify-center font-bold text-xs shadow-sm ${
               phase === "review"
-                ? "bg-stone-950 text-white"
-                : "bg-stone-200 text-stone-500"
+                ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-blue-500/25 border border-sky-400/30"
+                : "bg-[#141824] text-stone-400 border border-[#252d3d]"
             }`}
           >
             2
           </div>
           <div className="text-right">
-            <p className="text-xs font-bold text-stone-900">Kustomisasi</p>
-            <p className="text-[11px] text-stone-500 font-mono">Frame & Unduh</p>
+            <p className="text-xs font-bold text-stone-100">Kustomisasi</p>
+            <p className="text-[10px] sm:text-[11px] text-stone-400 font-mono">Frame & Unduh</p>
           </div>
         </div>
       </div>
 
-      {/* Main View Switcher */}
+      {/* Main View Switcher with Smooth Animation */}
       {phase === "review" ? (
-        <CustomizerView
-          photos={capturedPhotos}
-          settings={settings}
-          onChangeSettings={setSettings}
-          onRetakeAll={handleRetakeAll}
-          onRetakeSingle={handleRetakeSingle}
-        />
+        <div key="review-phase" className="animate-slide-up">
+          <CustomizerView
+            photos={capturedPhotos}
+            settings={settings}
+            onChangeSettings={setSettings}
+            onRetakeAll={handleRetakeAll}
+            onRetakeSingle={handleRetakeSingle}
+          />
+        </div>
       ) : (
-        <div>
+        <div key="capture-phase" className="animate-slide-up">
           {/* Real-time Camera View */}
           <CameraView
             settings={settings}

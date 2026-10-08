@@ -14,6 +14,8 @@ import {
   Check,
   Smile,
   CheckCircle2,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import {
   PhotoboothSettings,
@@ -42,6 +44,16 @@ export default function CustomizerView({
   const [isExporting, setIsExporting] = useState<boolean>(false);
   const [downloadSuccess, setDownloadSuccess] = useState<boolean>(false);
   const [activeTab, setActiveTab] = useState<"frame" | "filter" | "text" | "sticker">("frame");
+  const [framePage, setFramePage] = useState<number>(() => {
+    const idx = BACKGROUND_THEMES.findIndex((t) => t.id === settings.background.id);
+    return idx >= 0 ? Math.floor(idx / 6) : 0;
+  });
+  const FRAMES_PER_PAGE = 6;
+  const totalFramePages = Math.ceil(BACKGROUND_THEMES.length / FRAMES_PER_PAGE);
+  const currentFrames = BACKGROUND_THEMES.slice(
+    framePage * FRAMES_PER_PAGE,
+    (framePage + 1) * FRAMES_PER_PAGE
+  );
 
   // Handle Download High-Res Photostrip
   const handleDownloadStrip = async () => {
@@ -76,34 +88,34 @@ export default function CustomizerView({
       const printWindow = window.open("", "_blank");
       if (!printWindow) {
         alert("Pop-up diblokir. Izinkan pop-up untuk mencetak foto.");
-        return;
+      } else {
+        printWindow.document.write(`
+          <html>
+            <head>
+              <title>Cetak RuangMomen Photostrip</title>
+              <style>
+                @page { size: auto; margin: 10mm; }
+                body { margin: 0; display: flex; justify-content: center; align-items: center; background: #fff; }
+                img { max-height: 95vh; max-width: 95vw; object-fit: contain; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+              </style>
+            </head>
+            <body>
+              <img src="${dataUrl}" onload="window.print(); window.close();" />
+            </body>
+          </html>
+        `);
+        printWindow.document.close();
       }
-      printWindow.document.write(`
-        <html>
-          <head>
-            <title>Cetak RuangMomen Photostrip</title>
-            <style>
-              @page { size: auto; margin: 10mm; }
-              body { margin: 0; display: flex; justify-content: center; align-items: center; background: #fff; }
-              img { max-height: 95vh; max-width: 95vw; object-fit: contain; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
-            </style>
-          </head>
-          <body>
-            <img src="${dataUrl}" onload="window.print(); window.close();" />
-          </body>
-        </html>
-      `);
-      printWindow.document.close();
     } catch (err) {
       console.error("Print error:", err);
     }
   };
 
   return (
-    <div className="w-full max-w-6xl mx-auto py-4">
+    <div className="w-full max-w-6xl mx-auto py-2 sm:py-4">
       {/* Success Notification Banner */}
       {downloadSuccess && (
-        <div className="mb-6 p-4 rounded-2xl bg-emerald-500 text-white flex items-center justify-between shadow-xl animate-in fade-in slide-in-from-top-4 duration-300">
+        <div className="mb-4 sm:mb-6 p-4 rounded-2xl bg-emerald-600 text-white flex items-center justify-between shadow-xl animate-in fade-in slide-in-from-top-4 duration-300">
           <div className="flex items-center gap-3">
             <CheckCircle2 className="w-6 h-6 shrink-0" />
             <div>
@@ -113,19 +125,19 @@ export default function CustomizerView({
           </div>
           <button
             onClick={() => setDownloadSuccess(false)}
-            className="text-xs bg-white/20 hover:bg-white/30 px-3 py-1.5 rounded-full font-semibold"
+            className="text-xs bg-white/20 hover:bg-white/30 px-3 py-1.5 rounded-full font-semibold cursor-pointer"
           >
             Tutup
           </button>
         </div>
       )}
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start">
         {/* Left Column: Live Visual Photostrip Preview */}
-        <div className="lg:col-span-5 flex flex-col items-center sticky top-24">
-          <div className="w-full bg-zinc-100/80 rounded-3xl p-6 border border-zinc-200/80 shadow-inner flex flex-col items-center">
-            <div className="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-3 flex items-center gap-1.5">
-              <Sparkles className="w-3.5 h-3.5 text-primary" />
+        <div className="lg:col-span-5 flex flex-col items-center sticky top-20 sm:top-24">
+          <div className="w-full bg-[#0d121f]/90 backdrop-blur-xl rounded-2xl sm:rounded-3xl p-4 sm:p-6 border border-[#232c3d] shadow-2xl flex flex-col items-center">
+            <div className="text-xs font-bold text-sky-400 uppercase tracking-widest mb-3 flex items-center gap-1.5">
+              <Sparkles className="w-3.5 h-3.5 text-sky-400" />
               Live Preview Photostrip
             </div>
 
@@ -135,30 +147,30 @@ export default function CustomizerView({
               onRetakePhoto={onRetakeSingle}
             />
 
-            <p className="text-[11px] text-zinc-400 mt-2 text-center">
-              💡 Arahkan kursor ke foto di atas jika ingin mengulang foto tertentu
+            <p className="text-[10px] sm:text-[11px] text-stone-400 mt-3 text-center font-mono">
+              💡 Ketuk foto di atas jika ingin mengulang pose tertentu
             </p>
           </div>
         </div>
 
         {/* Right Column: Customization Controls & Download Options */}
-        <div className="lg:col-span-7 bg-white rounded-2xl p-4 sm:p-6 md:p-8 shadow-xs border border-[#e8e2d8] space-y-6 sm:space-y-7">
+        <div className="lg:col-span-7 bg-[#0d121f]/90 backdrop-blur-xl rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 shadow-2xl border border-[#232c3d] space-y-5 sm:space-y-6">
           {/* Header Title */}
           <div>
-            <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-md bg-stone-100 text-stone-700 text-xs font-mono uppercase tracking-wider mb-2 border border-stone-200">
-              <Sparkles className="w-3 h-3 text-[#c83d3d]" />
-              RuangMomen Custom Studio
+            <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-md bg-[#161f33] text-sky-300 text-xs font-mono uppercase tracking-wider mb-2 border border-[#283857]">
+              <Sparkles className="w-3 h-3 text-sky-400" />
+              RuangMomen Studio Customizer
             </div>
-            <h2 className="text-2xl md:text-3xl font-heading font-black text-stone-950 tracking-tight">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-heading font-black text-white tracking-tight">
               Kustomisasi Strip Fotomu
             </h2>
-            <p className="text-stone-500 text-xs md:text-sm mt-1">
+            <p className="text-stone-400 text-xs sm:text-sm mt-1">
               Pilih warna frame, filter foto studio, format tata letak, dan tambahkan stiker lucu.
             </p>
           </div>
 
           {/* Navigation Tabs for Customizer */}
-          <div className="flex border-b border-gray-100 pb-3 gap-2 overflow-x-auto">
+          <div className="flex border-b border-[#232c3d] pb-3 gap-1.5 sm:gap-2 overflow-x-auto">
             {[
               { id: "frame", label: "Frame & Warna", icon: Palette },
               { id: "filter", label: "Filter Foto", icon: Wand2 },
@@ -171,14 +183,14 @@ export default function CustomizerView({
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id as typeof activeTab)}
-                  className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs md:text-sm transition-all cursor-pointer whitespace-nowrap ${
+                  className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all cursor-pointer whitespace-nowrap active:scale-95 ${
                     isActive
-                      ? "bg-gray-900 text-white shadow-md shadow-gray-900/20"
-                      : "text-gray-600 hover:bg-gray-100"
+                      ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/25 border border-sky-400/40"
+                      : "text-stone-400 hover:bg-[#151c2e] hover:text-white"
                   }`}
                 >
-                  <Icon className="w-4 h-4" />
-                  {tab.label}
+                  <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                  <span>{tab.label}</span>
                 </button>
               );
             })}
@@ -186,14 +198,40 @@ export default function CustomizerView({
 
           {/* Tab 1: Frame & Background Themes */}
           {activeTab === "frame" && (
-            <div className="space-y-6">
-              {/* Aesthetic Background Choices */}
+            <div key="frame-tab" className="space-y-5 animate-fade-in">
+              {/* Aesthetic Background Choices with Pagination */}
               <div>
-                <label className="block text-xs sm:text-sm font-bold text-stone-900 mb-2.5">
-                  Pilih Background Frame Aesthetic
-                </label>
+                <div className="flex items-center justify-between mb-2.5">
+                  <label className="block text-xs sm:text-sm font-bold text-stone-200">
+                    Pilih Background Frame Aesthetic ({BACKGROUND_THEMES.length} Pilihan)
+                  </label>
+                  <div className="flex items-center gap-1.5 bg-[#121826] px-2 py-1 rounded-lg border border-[#232c3d]">
+                    <span className="text-[10px] sm:text-xs font-mono text-stone-400">
+                      Hal. <span className="text-sky-400 font-bold">{framePage + 1}</span>/{totalFramePages}
+                    </span>
+                    <button
+                      type="button"
+                      disabled={framePage === 0}
+                      onClick={() => setFramePage((p) => Math.max(0, p - 1))}
+                      className="p-1 rounded-md text-stone-300 hover:text-white hover:bg-white/10 disabled:opacity-30 disabled:hover:bg-transparent cursor-pointer disabled:cursor-not-allowed transition-colors"
+                      title="Halaman Sebelumnya"
+                    >
+                      <ChevronLeft className="w-3.5 h-3.5" />
+                    </button>
+                    <button
+                      type="button"
+                      disabled={framePage >= totalFramePages - 1}
+                      onClick={() => setFramePage((p) => Math.min(totalFramePages - 1, p + 1))}
+                      className="p-1 rounded-md text-stone-300 hover:text-white hover:bg-white/10 disabled:opacity-30 disabled:hover:bg-transparent cursor-pointer disabled:cursor-not-allowed transition-colors"
+                      title="Halaman Berikutnya"
+                    >
+                      <ChevronRight className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+                </div>
+
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3">
-                  {BACKGROUND_THEMES.map((theme) => {
+                  {currentFrames.map((theme) => {
                     const isSelected = settings.background.id === theme.id;
                     return (
                       <button
@@ -205,14 +243,14 @@ export default function CustomizerView({
                             background: theme,
                           }))
                         }
-                        className={`relative p-3 rounded-xl border-2 transition-all flex flex-col items-center justify-center text-center cursor-pointer min-h-[85px] ${
+                        className={`relative p-3 rounded-xl border-2 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg flex flex-col items-center justify-center text-center cursor-pointer min-h-[85px] active:scale-95 ${
                           isSelected
-                            ? "border-stone-950 ring-2 ring-stone-950/20 shadow-xs scale-102"
-                            : "border-stone-200 hover:border-stone-400"
+                            ? "border-sky-400 ring-2 ring-sky-400/40 shadow-md shadow-sky-500/20 scale-102"
+                            : "border-[#232c3d] hover:border-sky-500/40"
                         }`}
                         style={{
                           background: theme.bgValue,
-                          borderColor: isSelected ? undefined : theme.borderColor,
+                          borderColor: isSelected ? "#38bdf8" : theme.borderColor || "#232c3d",
                         }}
                       >
                         <span
@@ -222,12 +260,12 @@ export default function CustomizerView({
                           {theme.name}
                         </span>
                         {theme.hasFilmHoles && (
-                          <span className="text-[10px] text-amber-500 font-semibold mt-1">
+                          <span className="text-[10px] text-amber-400 font-semibold mt-1">
                             35mm Strip
                           </span>
                         )}
                         {isSelected && (
-                          <span className="absolute top-2 right-2 w-5 h-5 rounded-full bg-primary text-white flex items-center justify-center shadow-md">
+                          <span className="absolute top-2 right-2 w-5 h-5 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white flex items-center justify-center shadow-md">
                             <Check className="w-3 h-3 stroke-[3]" />
                           </span>
                         )}
@@ -235,15 +273,32 @@ export default function CustomizerView({
                     );
                   })}
                 </div>
+
+                {/* Pagination Dots indicator */}
+                <div className="flex items-center justify-center gap-2 mt-3">
+                  {Array.from({ length: totalFramePages }).map((_, idx) => (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={() => setFramePage(idx)}
+                      className={`h-2 rounded-full transition-all cursor-pointer ${
+                        framePage === idx
+                          ? "w-6 bg-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.5)]"
+                          : "w-2 bg-[#232c3d] hover:bg-stone-500"
+                      }`}
+                      aria-label={`Buka halaman frame ${idx + 1}`}
+                    />
+                  ))}
+                </div>
               </div>
 
               {/* Layout Choices (only if 4 or 6 photos) */}
               {(photos.length === 4 || photos.length === 6) && (
                 <div>
-                  <label className="block text-sm font-bold text-gray-900 mb-3">
+                  <label className="block text-xs sm:text-sm font-bold text-stone-200 mb-2.5">
                     Tata Letak (Layout)
                   </label>
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="grid grid-cols-2 gap-2.5 sm:gap-3">
                     <button
                       type="button"
                       onClick={() =>
@@ -252,10 +307,10 @@ export default function CustomizerView({
                           layout: "strip",
                         }))
                       }
-                      className={`p-3.5 rounded-2xl border-2 flex items-center justify-center gap-2.5 font-bold text-sm cursor-pointer transition-all ${
+                      className={`p-3 sm:p-3.5 rounded-xl border-2 flex items-center justify-center gap-2 font-bold text-xs sm:text-sm cursor-pointer transition-all active:scale-95 ${
                         settings.layout === "strip"
-                          ? "border-primary bg-pink-50/50 text-primary shadow-sm"
-                          : "border-gray-200 text-gray-700 hover:border-gray-300"
+                          ? "border-sky-400 bg-sky-500/15 text-white shadow-sm ring-1 ring-sky-400/40"
+                          : "border-[#232c3d] text-stone-300 hover:border-sky-500/40 bg-[#121826]"
                       }`}
                     >
                       <span>Klasik Strip (1 Kolom)</span>
@@ -268,10 +323,10 @@ export default function CustomizerView({
                           layout: "grid",
                         }))
                       }
-                      className={`p-3.5 rounded-2xl border-2 flex items-center justify-center gap-2.5 font-bold text-sm cursor-pointer transition-all ${
+                      className={`p-3 sm:p-3.5 rounded-xl border-2 flex items-center justify-center gap-2 font-bold text-xs sm:text-sm cursor-pointer transition-all active:scale-95 ${
                         settings.layout === "grid"
-                          ? "border-primary bg-pink-50/50 text-primary shadow-sm"
-                          : "border-gray-200 text-gray-700 hover:border-gray-300"
+                          ? "border-sky-400 bg-sky-500/15 text-white shadow-sm ring-1 ring-sky-400/40"
+                          : "border-[#232c3d] text-stone-300 hover:border-sky-500/40 bg-[#121826]"
                       }`}
                     >
                       <LayoutGrid className="w-4 h-4" />
@@ -285,11 +340,11 @@ export default function CustomizerView({
 
           {/* Tab 2: Filters */}
           {activeTab === "filter" && (
-            <div className="space-y-4">
-              <label className="block text-sm font-bold text-gray-900 mb-2">
+            <div key="filter-tab" className="space-y-4 animate-fade-in">
+              <label className="block text-xs sm:text-sm font-bold text-stone-200 mb-2">
                 Pilih Efek Warna Foto
               </label>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3">
                 {PHOTO_FILTERS.map((f) => {
                   const isSelected = settings.filter.id === f.id;
                   return (
@@ -302,14 +357,14 @@ export default function CustomizerView({
                           filter: f,
                         }))
                       }
-                      className={`p-4 rounded-2xl border-2 transition-all flex flex-col items-center justify-center cursor-pointer ${
+                      className={`p-3 sm:p-4 rounded-xl border-2 transition-all flex flex-col items-center justify-center cursor-pointer active:scale-95 ${
                         isSelected
-                          ? "border-purple-600 bg-purple-50 text-purple-900 shadow-md"
-                          : "border-gray-200 hover:border-gray-300 text-gray-700 bg-white"
+                          ? "border-sky-400 bg-sky-500/15 text-white shadow-md ring-1 ring-sky-400/40 scale-102"
+                          : "border-[#232c3d] hover:border-sky-500/40 text-stone-300 bg-[#121826] hover:-translate-y-0.5"
                       }`}
                     >
-                      <span className="font-bold text-sm">{f.name}</span>
-                      <span className="text-[11px] text-gray-400 mt-1">
+                      <span className="font-bold text-xs sm:text-sm">{f.name}</span>
+                      <span className="text-[10px] sm:text-[11px] text-stone-400 mt-1">
                         {f.id === "bw"
                           ? "Monokrom klasik"
                           : f.id === "warm"
@@ -327,10 +382,10 @@ export default function CustomizerView({
 
           {/* Tab 3: Text & Date */}
           {activeTab === "text" && (
-            <div className="space-y-6">
+            <div key="text-tab" className="space-y-5 sm:space-y-6 animate-fade-in">
               {/* Custom Caption Input */}
               <div>
-                <label className="block text-sm font-bold text-gray-900 mb-2">
+                <label className="block text-xs sm:text-sm font-bold text-stone-200 mb-2">
                   Tulis Pesan / Caption Kustom
                 </label>
                 <input
@@ -344,23 +399,23 @@ export default function CustomizerView({
                     }))
                   }
                   placeholder="Contoh: Besties Day Out 💕 / Graduation 2026"
-                  className="w-full px-4 py-3 rounded-2xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                  className="w-full px-4 py-2.5 sm:py-3 rounded-xl border border-[#232c3d] bg-[#121826] text-white text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all placeholder:text-stone-500"
                 />
-                <p className="text-xs text-gray-400 mt-1.5 flex justify-between">
+                <p className="text-[11px] sm:text-xs text-stone-400 mt-1.5 flex justify-between font-mono">
                   <span>Akan tercetak di bagian bawah foto strip</span>
                   <span>{settings.customCaption.length}/40 karakter</span>
                 </p>
               </div>
 
               {/* Show Date Toggle */}
-              <div className="flex items-center justify-between p-4 rounded-2xl bg-gray-50 border border-gray-100">
+              <div className="flex items-center justify-between p-3.5 sm:p-4 rounded-xl bg-[#121826] border border-[#232c3d]">
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-gray-200 text-gray-700 flex items-center justify-center">
+                  <div className="w-8 h-8 rounded-lg bg-[#182033] text-sky-400 border border-[#283552] flex items-center justify-center">
                     <Calendar className="w-4 h-4" />
                   </div>
                   <div>
-                    <p className="text-sm font-bold text-gray-800">Tampilkan Stempel Tanggal</p>
-                    <p className="text-xs text-gray-500">Mencantumkan tanggal hari ini pada strip</p>
+                    <p className="text-xs sm:text-sm font-bold text-stone-200">Tampilkan Stempel Tanggal</p>
+                    <p className="text-[11px] text-stone-400">Mencantumkan tanggal hari ini pada strip</p>
                   </div>
                 </div>
                 <button
@@ -372,7 +427,7 @@ export default function CustomizerView({
                     }))
                   }
                   className={`w-12 h-7 rounded-full p-1 transition-colors duration-200 ease-in-out cursor-pointer ${
-                    settings.showDate ? "bg-primary" : "bg-gray-300"
+                    settings.showDate ? "bg-sky-500" : "bg-[#232c3d]"
                   }`}
                 >
                   <div
@@ -387,9 +442,9 @@ export default function CustomizerView({
 
           {/* Tab 4: Stickers */}
           {activeTab === "sticker" && (
-            <div className="space-y-4">
+            <div key="sticker-tab" className="space-y-4 animate-fade-in">
               <div className="flex justify-between items-center mb-2">
-                <label className="text-sm font-bold text-gray-900">
+                <label className="text-xs sm:text-sm font-bold text-stone-200">
                   Pilih Stiker Hiasan
                 </label>
                 {settings.selectedSticker && (
@@ -400,13 +455,13 @@ export default function CustomizerView({
                         selectedSticker: null,
                       }))
                     }
-                    className="text-xs text-red-500 hover:underline font-semibold"
+                    className="text-xs text-sky-400 hover:underline font-semibold cursor-pointer"
                   >
                     Hapus Stiker
                   </button>
                 )}
               </div>
-              <div className="grid grid-cols-5 gap-3">
+              <div className="grid grid-cols-5 gap-2 sm:gap-3">
                 {STICKERS.map((stk) => {
                   const isSelected = settings.selectedSticker === stk.symbol;
                   return (
@@ -419,14 +474,14 @@ export default function CustomizerView({
                           selectedSticker: isSelected ? null : stk.symbol,
                         }))
                       }
-                      className={`p-3 rounded-2xl border-2 flex flex-col items-center justify-center transition-all cursor-pointer ${
+                      className={`p-2.5 sm:p-3 rounded-xl border-2 flex flex-col items-center justify-center transition-all cursor-pointer active:scale-95 ${
                         isSelected
-                          ? "border-primary bg-pink-50 ring-2 ring-primary/20 scale-105"
-                          : "border-gray-200 hover:border-gray-300 bg-white"
+                          ? "border-sky-400 bg-sky-500/20 ring-2 ring-sky-400/40 scale-105"
+                          : "border-[#232c3d] hover:border-sky-500/40 bg-[#121826]"
                       }`}
                     >
-                      <span className="text-3xl">{stk.symbol}</span>
-                      <span className="text-[10px] text-gray-500 mt-1">{stk.label}</span>
+                      <span className="text-2xl sm:text-3xl">{stk.symbol}</span>
+                      <span className="text-[9px] sm:text-[10px] text-stone-400 mt-1">{stk.label}</span>
                     </button>
                   );
                 })}
@@ -435,16 +490,16 @@ export default function CustomizerView({
           )}
 
           {/* Action & Download Section */}
-          <div className="pt-6 border-t border-[#e8e2d8] space-y-3">
+          <div className="pt-5 sm:pt-6 border-t border-[#232c3d] space-y-3">
             {/* Primary Action: Download High Res Photostrip */}
             <button
               type="button"
               disabled={isExporting}
               onClick={handleDownloadStrip}
-              className={`w-full py-3.5 px-6 rounded-xl font-heading font-bold text-sm md:text-base text-white shadow-sm flex items-center justify-center gap-2.5 transition-all cursor-pointer ${
+              className={`w-full py-3.5 px-6 rounded-xl font-heading font-bold text-sm md:text-base text-white shadow-lg flex items-center justify-center gap-2.5 transition-all duration-300 cursor-pointer ${
                 isExporting
-                  ? "bg-stone-400 cursor-wait"
-                  : "bg-stone-950 hover:bg-stone-800 active:scale-[0.99]"
+                  ? "bg-stone-700 cursor-wait opacity-80"
+                  : "bg-gradient-to-r from-blue-600 via-sky-600 to-indigo-600 hover:from-blue-500 hover:via-sky-500 hover:to-indigo-500 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-blue-500/35 border border-blue-400/30 active:scale-[0.98]"
               }`}
             >
               <Download className="w-4 h-4" />
@@ -452,14 +507,14 @@ export default function CustomizerView({
             </button>
 
             {/* Secondary Actions Row */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3">
               {/* Download Individual Photos */}
               <button
                 type="button"
                 onClick={handleDownloadIndividual}
-                className="py-3 px-4 rounded-xl border border-gray-200 text-gray-700 hover:bg-gray-50 font-bold text-xs flex items-center justify-center gap-2 transition-all cursor-pointer"
+                className="py-2.5 sm:py-3 px-4 rounded-xl border border-[#232c3d] bg-[#121826] text-stone-300 hover:text-white hover:border-sky-400/50 hover:-translate-y-0.5 hover:shadow-md font-bold text-xs flex items-center justify-center gap-2 transition-all duration-200 cursor-pointer active:scale-95"
               >
-                <Download className="w-4 h-4 text-sky-500" />
+                <Download className="w-3.5 h-3.5 text-sky-400" />
                 <span>Unduh Foto Satuan</span>
               </button>
 
@@ -467,9 +522,9 @@ export default function CustomizerView({
               <button
                 type="button"
                 onClick={handlePrint}
-                className="py-3 px-4 rounded-xl border border-gray-200 text-gray-700 hover:bg-gray-50 font-bold text-xs flex items-center justify-center gap-2 transition-all cursor-pointer"
+                className="py-2.5 sm:py-3 px-4 rounded-xl border border-[#232c3d] bg-[#121826] text-stone-300 hover:text-white hover:border-purple-400/50 hover:-translate-y-0.5 hover:shadow-md font-bold text-xs flex items-center justify-center gap-2 transition-all duration-200 cursor-pointer active:scale-95"
               >
-                <Printer className="w-4 h-4 text-purple-500" />
+                <Printer className="w-3.5 h-3.5 text-purple-400" />
                 <span>Cetak / Print</span>
               </button>
 
@@ -477,9 +532,9 @@ export default function CustomizerView({
               <button
                 type="button"
                 onClick={onRetakeAll}
-                className="py-3 px-4 rounded-xl border border-rose-200 text-rose-600 hover:bg-rose-50 font-bold text-xs flex items-center justify-center gap-2 transition-all cursor-pointer"
+                className="py-2.5 sm:py-3 px-4 rounded-xl border border-[#232c3d] bg-[#121826] text-stone-400 hover:text-rose-400 hover:border-rose-900/50 hover:-translate-y-0.5 hover:shadow-md font-bold text-xs flex items-center justify-center gap-2 transition-all duration-200 cursor-pointer active:scale-95"
               >
-                <RefreshCw className="w-4 h-4" />
+                <RefreshCw className="w-3.5 h-3.5" />
                 <span>Foto Ulang Semua</span>
               </button>
             </div>

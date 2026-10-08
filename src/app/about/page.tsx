@@ -2,83 +2,115 @@ import Image from "next/image";
 import Link from "next/link";
 import {
   Camera,
-  Maximize2,
-  Heart,
-  ShieldCheck,
-  Palette,
-  ArrowRight,
   Mail,
   Phone,
-  MapPin,
-  Smile,
-  Layers,
+  Sparkles,
+  Code2,
 } from "lucide-react";
 import Navbar from "@/components/Navbar";
 
 export default function AboutPage() {
   return (
-    <div className="flex flex-col min-h-screen bg-[#faf8f5] text-stone-900 overflow-x-hidden">
+    <div className="flex flex-col min-h-screen bg-[#070b18] text-stone-100 overflow-x-hidden selection:bg-blue-600 selection:text-white">
       {/* Navbar */}
       <Navbar />
 
-      {/* Hero Section */}
-      <section className="pt-28 sm:pt-36 pb-14 sm:pb-20 border-b border-[#e8e2d8]">
-        <div className="container mx-auto px-4 sm:px-6 md:px-12 max-w-5xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-white border border-[#e8e2d8] text-stone-700 text-[11px] sm:text-xs font-mono tracking-wider uppercase mb-5 sm:mb-6 shadow-2xs">
-            <span className="w-2 h-2 rounded-full bg-[#c83d3d]" />
-            Tentang RuangMomen • Cerita & Visi Kami
+      {/* Creator Profile & Attribution Section - Topmost Section */}
+      <section className="relative pt-28 sm:pt-36 pb-12 sm:pb-16 border-b border-white/[0.08] bg-[#070b18] overflow-hidden">
+        {/* Overhead Studio Key Light / Blue Gradient Spotlight Beam */}
+        <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_65%_50%_at_50%_0%,_rgba(59,130,246,0.18)_0%,_rgba(37,99,235,0.04)_50%,_transparent_80%)]" />
+
+        {/* Ambient Rim Glows */}
+        <div className="absolute -top-10 left-1/4 w-[450px] h-[350px] bg-[radial-gradient(circle_at_center,_rgba(56,189,248,0.1)_0%,_transparent_70%)] pointer-events-none blur-3xl" />
+        <div className="absolute top-1/4 -right-16 w-[500px] h-[400px] bg-[radial-gradient(circle_at_center,_rgba(99,102,241,0.15)_0%,_transparent_70%)] pointer-events-none blur-3xl" />
+
+        <div className="container relative z-10 mx-auto px-4 sm:px-6 md:px-12 max-w-4xl">
+          <div className="relative rounded-3xl p-6 sm:p-10 md:p-12 bg-gradient-to-b from-[#0f172a]/90 via-[#0a101d]/95 to-[#070b18]/95 backdrop-blur-xl border border-white/[0.1] shadow-2xl flex flex-col sm:flex-row items-center gap-6 sm:gap-10">
+            {/* Top Specular Accent Light */}
+            <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-sky-400/50 to-transparent pointer-events-none" />
+
+            {/* Profile Photo Frame */}
+            <div className="relative shrink-0 group">
+              <div className="w-36 h-48 sm:w-44 sm:h-56 rounded-2xl overflow-hidden p-[2.5px] bg-gradient-to-b from-sky-400 via-blue-500 to-indigo-600 shadow-[0_0_30px_rgba(56,189,248,0.25)] group-hover:shadow-[0_0_45px_rgba(56,189,248,0.45)] transition-all duration-300">
+                <div className="w-full h-full rounded-[14px] overflow-hidden relative bg-black">
+                  <Image
+                    src="/images/FR.jpeg"
+                    alt="Fajar Puniman S.Kom"
+                    fill
+                    sizes="(max-width: 640px) 144px, 176px"
+                    className="object-cover object-top filter contrast-[1.05] brightness-[1.02] group-hover:scale-105 transition-transform duration-500"
+                    priority
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Creator Attribution Typography */}
+            <div className="text-center sm:text-left space-y-3.5 flex-1">
+              <div>
+                <p className="text-xs sm:text-sm font-mono tracking-widest uppercase text-sky-400 font-semibold">
+                  Created by
+                </p>
+                <h3 className="text-2xl sm:text-3xl md:text-4xl font-heading font-black tracking-tight text-white mt-1">
+                  <span className="bg-gradient-to-r from-sky-300 via-blue-200 to-indigo-300 bg-clip-text text-transparent font-serif italic font-normal drop-shadow-[0_0_25px_rgba(56,189,248,0.35)]">
+                    Fajar Puniman S.Kom
+                  </span>
+                </h3>
+              </div>
+
+              <p className="text-stone-300 text-xs sm:text-sm leading-relaxed max-w-xl">
+                Pengembang & kreator di balik ekosistem <strong>RuangMomen</strong>, menggabungkan sentuhan visual fotografi analog dengan arsitektur web modern agar momen berharga dapat diabadikan secara instan, privat, dan berkualitas studio.
+              </p>
+
+              <div className="pt-2 flex flex-wrap items-center justify-center sm:justify-start gap-2.5">
+                <span className="px-3 py-1 rounded-lg bg-white/[0.05] border border-white/10 text-stone-300 text-[11px] font-mono">
+                  Software Engineer & Full Creator
+                </span>
+                <span className="px-3 py-1 rounded-lg bg-sky-500/10 border border-sky-500/20 text-sky-300 text-[11px] font-mono">
+                  RuangMomen Studio • 2026
+                </span>
+              </div>
+            </div>
           </div>
-
-          <h1 className="text-3xl sm:text-5xl md:text-6xl font-heading font-black text-stone-950 tracking-tight leading-[1.1] mb-6 sm:mb-8">
-            Membawa Hangatnya Momen Otentik ke{" "}
-            <span className="text-[#c83d3d] font-serif italic font-normal">
-              Ruang Digital.
-            </span>
-          </h1>
-
-          <p className="text-base sm:text-lg md:text-xl text-stone-600 leading-relaxed max-w-3xl">
-            RuangMomen lahir dari keyakinan sederhana: bahwa tawa spontan, gaya konyol bersama sahabat, dan momen bahagia tak tergantikan pantas diabadikan dengan cara yang estetik, mudah, dan dapat dinikmati oleh siapa saja kapan saja.
-          </p>
         </div>
       </section>
 
-      {/* Story & Philosophy Section */}
-      <section className="py-14 sm:py-20 bg-white">
+
+
+      {/* Philosophy & Studio Section */}
+      <section className="py-14 sm:py-20 bg-[#090e1c] relative flex-1">
         <div className="container mx-auto px-4 sm:px-6 md:px-12 max-w-5xl">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             {/* Left Narrative */}
             <div className="lg:col-span-7 space-y-5 sm:space-y-6">
-              <span className="text-xs font-mono text-stone-500 uppercase tracking-widest block">
+              <span className="text-xs font-mono text-sky-400 uppercase tracking-widest block font-semibold">
                 Filosofi Kami
               </span>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-heading font-black text-stone-950 tracking-tight">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-heading font-black text-white tracking-tight">
                 Mengapa Photobooth?
               </h2>
-              <div className="space-y-4 text-stone-600 text-sm sm:text-base leading-relaxed">
+              <div className="space-y-4 text-stone-300 text-sm sm:text-base leading-relaxed">
                 <p>
                   Di era di mana kamera smartphone memotret ribuan foto yang seringkali terlupakan di galeri, strip photobooth memiliki daya magis tersendiri. Ada batasan jumlah frame (3, 4, atau 6 foto), ada hitungan mundur yang memicu pose spontan tanpa kepura-puraan, dan ada rasa antusias menunggu hasil jadi yang rapi dalam satu strip estetik.
                 </p>
                 <p>
-                  Terinspirasi dari kultur photo booth studio di Seoul dan Tokyo yang hangat dan berkarakter, kami merancang <strong>RuangMomen</strong> agar pengalaman tersebut bisa diakses langsung melalui peramban web—tanpa perlu antre di mall, tanpa biaya sewa, dan tanpa aplikasi tambahan.
-                </p>
-                <p>
-                  Semua orang berhak mendapatkan foto berkualitas studio dengan palet warna kertas fisik, efek suara shutter yang nyata, serta kemudahan mengunduh dan mencetak hasilnya secara instan.
+                  Semua mendapatkan foto berkualitas studio dengan palet warna kertas fisik, efek suara shutter yang nyata, serta kemudahan mengunduh dan mencetak hasilnya secara instan dalam resolusi tinggi.
                 </p>
               </div>
             </div>
 
             {/* Right Visual Image */}
             <div className="lg:col-span-5 flex justify-center">
-              <div className="relative w-56 sm:w-64 md:w-72 transform rotate-1 sm:rotate-2 hover:rotate-0 transition-transform duration-500 shadow-xl rounded-2xl overflow-hidden border-4 sm:border-8 border-[#faf8f5] bg-stone-900">
+              <div className="relative w-56 sm:w-64 md:w-72 transform rotate-1 sm:rotate-2 hover:rotate-0 transition-transform duration-500 shadow-2xl rounded-2xl overflow-hidden border-2 border-white/10 bg-[#0c1222]">
                 <Image
-                  src="/images/hero.jpg"
+                  src="/images/fotsud.jpg"
                   alt="RuangMomen Studio Setup"
                   width={400}
                   height={500}
                   className="w-full h-auto object-cover"
                 />
-                <div className="p-3 sm:p-4 bg-stone-900 text-white text-center">
-                  <p className="font-heading font-bold text-xs sm:text-sm tracking-wide">RUANG MOMEN</p>
+                <div className="p-3 sm:p-4 bg-[#0c1222] text-white text-center border-t border-white/10">
+                  <p className="font-heading font-bold text-xs sm:text-sm tracking-wide text-sky-300">RUANG MOMEN</p>
                   <p className="text-[10px] sm:text-[11px] text-stone-400 font-mono mt-0.5">EST. 2026 • PHOTO STUDIO</p>
                 </div>
               </div>
@@ -87,108 +119,12 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Core Values Section */}
-      <section className="py-16 sm:py-24 bg-[#faf8f5] border-y border-[#e8e2d8]">
-        <div className="container mx-auto px-4 sm:px-6 md:px-12 max-w-5xl">
-          <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
-            <span className="text-xs font-mono text-stone-500 uppercase tracking-widest block mb-2">
-              Prinsip Desain
-            </span>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-heading font-black text-stone-950 tracking-tight">
-              Pilar yang Menjaga Kualitas Kami
-            </h2>
-            <p className="text-stone-600 text-xs sm:text-sm md:text-base mt-2">
-              Empat hal yang selalu menjadi komitmen kami di setiap jepretan foto Anda.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-            {[
-              {
-                icon: Palette,
-                title: "Warna Kertas Studio Nyata",
-                desc: "Kami menolak gradasi neon murahan. Semua 9 tema warna frame RuangMomen dikurasi dari palet kertas fisik studio analog (Classic Noir, Oatmeal Paper, Haru Sky, Sage Matcha, hingga 35mm film).",
-              },
-              {
-                icon: ShieldCheck,
-                title: "Privasi Penuh (Client-Side)",
-                desc: "Seluruh proses pengambilan gambar, filter, dan pembuatan strip foto diproses secara lokal di perangkat Anda. Foto Anda tidak pernah diunggah atau disimpan di server kami.",
-              },
-              {
-                icon: Layers,
-                title: "Format Fleksibel 3, 4, & 6 Foto",
-                desc: "Apakah Anda ingin strip ringkas, format 4-cuts Korea klasik, atau kolase 6 foto penuh untuk grup, semuanya bisa disesuaikan dengan mudah.",
-              },
-              {
-                icon: Heart,
-                title: "Akses Bebas untuk Semua",
-                desc: "RuangMomen dibangun agar siapa pun bisa berfoto dengan orang terkasih, bersenang-senang, dan menyimpan kenangan beresolusi tinggi tanpa batasan berbayar.",
-              },
-            ].map((val, idx) => (
-              <div
-                key={idx}
-                className="bg-white p-6 sm:p-8 rounded-2xl border border-[#e8e2d8] hover:border-stone-400 hover:shadow-xs transition-all"
-              >
-                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-stone-100 text-stone-900 flex items-center justify-center mb-4 sm:mb-5">
-                  <val.icon className="w-5 h-5 text-[#c83d3d]" />
-                </div>
-                <h3 className="text-base sm:text-lg font-bold text-stone-950 mb-2">{val.title}</h3>
-                <p className="text-stone-600 text-xs sm:text-sm leading-relaxed">{val.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Call To Action Banner */}
-      <section className="py-14 sm:py-20 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 md:px-12 max-w-5xl">
-          <div className="bg-[#1c1917] rounded-2xl sm:rounded-3xl p-6 sm:p-10 md:p-16 text-white text-center relative overflow-hidden border border-stone-800">
-            <div className="max-w-2xl mx-auto space-y-5 sm:space-y-6">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-stone-800 border border-stone-700 text-stone-300 text-xs font-mono tracking-wider uppercase">
-                <Smile className="w-3.5 h-3.5 text-[#c83d3d]" />
-                Abadikan Momen Berhargamu
-              </div>
-
-              <h2 className="text-2xl sm:text-4xl md:text-5xl font-heading font-black tracking-tight leading-tight">
-                Siap Mengambil Foto <br />
-                <span className="text-[#c83d3d] font-serif italic font-normal">Pertamamu Hari Ini?</span>
-              </h2>
-
-              <p className="text-stone-400 text-xs sm:text-sm md:text-base leading-relaxed">
-                Buka Full Screen Studio, pilih format dan timer yang Anda inginkan, lalu buat strip foto kenangan yang indah bersama orang tersayang.
-              </p>
-
-              <div className="pt-3 sm:pt-4 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
-                <Link
-                  href="/booth"
-                  className="inline-flex items-center justify-center gap-2.5 w-full sm:w-auto px-7 py-3.5 sm:px-8 sm:py-4 rounded-xl font-bold text-sm sm:text-base text-white bg-[#c83d3d] hover:bg-[#b23232] transition-all shadow-md cursor-pointer"
-                >
-                  <Maximize2 className="w-4 h-4" />
-                  <span>Buka Full Screen Studio</span>
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
-                <Link
-                  href="/"
-                  className="inline-flex items-center justify-center gap-2 w-full sm:w-auto px-6 py-3.5 sm:px-7 sm:py-4 rounded-xl font-medium text-xs sm:text-sm text-stone-300 bg-stone-900 border border-stone-800 hover:bg-stone-800 transition-all cursor-pointer"
-                >
-                  Kembali ke Beranda
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Footer */}
-      <footer id="contact" className="bg-[#18181b] text-stone-300 pt-16 sm:pt-20 pb-10 sm:pb-12 border-t border-stone-800">
+      <footer id="contact" className="bg-[#050814] text-stone-300 pt-16 sm:pt-20 pb-10 sm:pb-12 border-t border-white/[0.08]">
         <div className="container mx-auto px-4 sm:px-6 md:px-12">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12 mb-12 sm:mb-16">
-            <div className="col-span-1 sm:col-span-2">
+          <div className="flex flex-col sm:flex-row justify-between items-start gap-8 sm:gap-12 mb-12 sm:mb-16">
+            <div className="max-w-md">
               <div className="text-2xl font-heading font-bold text-white mb-4 flex items-center gap-2.5">
-                <span className="w-7 h-7 rounded-md bg-stone-800 text-white flex items-center justify-center text-xs font-mono font-bold">
-                  RM
-                </span>
                 <span>RuangMomen</span>
               </div>
               <p className="text-stone-400 max-w-md mb-6 sm:mb-8 leading-relaxed text-xs sm:text-sm">
@@ -198,28 +134,28 @@ export default function AboutPage() {
                 <a
                   href="#"
                   aria-label="Instagram"
-                  className="w-9 h-9 rounded-lg bg-stone-800 flex items-center justify-center hover:bg-stone-700 transition-colors text-white text-xs"
+                  className="w-9 h-9 rounded-lg bg-[#0e1628] border border-white/10 flex items-center justify-center hover:bg-[#15203a] hover:border-sky-400/40 transition-colors text-white text-xs"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
                 </a>
                 <a
                   href="#"
                   aria-label="Email"
-                  className="w-9 h-9 rounded-lg bg-stone-800 flex items-center justify-center hover:bg-stone-700 transition-colors text-white"
+                  className="w-9 h-9 rounded-lg bg-[#0e1628] border border-white/10 flex items-center justify-center hover:bg-[#15203a] hover:border-sky-400/40 transition-colors text-white"
                 >
-                  <Mail className="w-4 h-4" />
+                  <Mail className="w-4 h-4 text-sky-400" />
                 </a>
                 <a
                   href="#"
                   aria-label="Phone"
-                  className="w-9 h-9 rounded-lg bg-stone-800 flex items-center justify-center hover:bg-stone-700 transition-colors text-white"
+                  className="w-9 h-9 rounded-lg bg-[#0e1628] border border-white/10 flex items-center justify-center hover:bg-[#15203a] hover:border-sky-400/40 transition-colors text-white"
                 >
-                  <Phone className="w-4 h-4" />
+                  <Phone className="w-4 h-4 text-sky-400" />
                 </a>
               </div>
             </div>
 
-            <div>
+            <div className="sm:text-right">
               <h4 className="text-xs sm:text-sm font-bold text-white uppercase tracking-wider font-mono mb-4">Navigasi</h4>
               <ul className="space-y-2.5 sm:space-y-3 text-stone-400 text-xs sm:text-sm">
                 <li>
@@ -228,38 +164,25 @@ export default function AboutPage() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="/about" className="hover:text-white transition-colors">
+                  <Link href="/about" className="hover:text-white transition-colors text-white font-medium">
                     Tentang RuangMomen
                   </Link>
                 </li>
                 <li>
-                  <Link href="/booth" className="hover:text-white transition-colors flex items-center gap-1.5 font-medium text-stone-200">
-                    <Camera className="w-3.5 h-3.5 text-[#c83d3d]" /> Full Screen Studio
+                  <Link href="/booth" className="hover:text-white transition-colors flex items-center sm:justify-end gap-1.5 font-medium text-stone-200">
+                    <Camera className="w-3.5 h-3.5 text-sky-400" /> Full Screen Studio
                   </Link>
                 </li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="text-xs sm:text-sm font-bold text-white uppercase tracking-wider font-mono mb-4">Kontak</h4>
-              <ul className="space-y-2.5 sm:space-y-3 text-stone-400 text-xs sm:text-sm">
-                <li className="flex items-start gap-2.5">
-                  <MapPin className="w-4 h-4 text-stone-400 shrink-0 mt-0.5" />
-                  <span>Jakarta, Indonesia</span>
-                </li>
-                <li className="flex items-center gap-2.5">
-                  <Phone className="w-4 h-4 text-stone-400 shrink-0" />
-                  <span>+62 812 3456 7890</span>
-                </li>
-                <li className="flex items-center gap-2.5">
-                  <Mail className="w-4 h-4 text-stone-400 shrink-0" />
-                  <span>hello@ruangmomen.com</span>
+                <li>
+                  <Link href="/contact" className="hover:text-white transition-colors">
+                    Kontak & Lokasi
+                  </Link>
                 </li>
               </ul>
             </div>
           </div>
 
-          <div className="border-t border-stone-800 pt-6 sm:pt-8 flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-4 text-[11px] sm:text-xs text-stone-500">
+          <div className="border-t border-white/[0.08] pt-6 sm:pt-8 flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-4 text-[11px] sm:text-xs text-stone-500">
             <p>© 2026 RuangMomen Photobooth. All rights reserved.</p>
             <div className="flex gap-4 sm:gap-6">
               <a href="#" className="hover:text-stone-300 transition-colors">Privasi</a>

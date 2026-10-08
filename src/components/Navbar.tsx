@@ -2,167 +2,110 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Camera, Home as HomeIcon, Menu, X, Mail } from "lucide-react";
+import { Camera, Home as HomeIcon, Sparkles, Mail } from "lucide-react";
 import { useState, useEffect } from "react";
 
 export default function Navbar() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 30);
+      setScrolled(window.scrollY > 20);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth >= 768) {
-        setMobileMenuOpen(false);
-      }
-    };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
   const isHome = pathname === "/";
   const isAbout = pathname === "/about" || pathname === "/tentang";
   const isBooth = pathname === "/booth";
+  const isContact = pathname === "/contact" || pathname === "/kontak";
 
   return (
-    <nav
-      className={`fixed w-full z-50 transition-all duration-300 ${
-        scrolled || mobileMenuOpen
-          ? "bg-[#faf8f5]/95 backdrop-blur-md border-b border-[#e8e2d8] py-3.5 shadow-xs"
-          : "bg-transparent py-5"
+    <header
+      className={`fixed top-0 inset-x-0 w-full z-50 transition-all duration-300 border-b ${
+        scrolled
+          ? "bg-[#070b18]/95 backdrop-blur-2xl border-white/[0.12] shadow-[0_8px_32px_rgba(0,0,0,0.65)]"
+          : "bg-[#070b18]/80 backdrop-blur-xl border-white/[0.08] shadow-[0_4px_20px_rgba(0,0,0,0.4)]"
       }`}
     >
-      <div className="container mx-auto px-4 sm:px-6 md:px-12 flex justify-between items-center">
+      {/* Specular Ambient Glow Beam along bottom border */}
+      <div className="absolute inset-x-0 bottom-0 h-[1px] bg-gradient-to-r from-transparent via-sky-400/40 to-transparent pointer-events-none" />
+
+      <nav className="w-full max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-14 sm:h-16 flex items-center justify-between">
         {/* Brand / Logo */}
         <Link
           href="/"
-          className="text-lg sm:text-xl font-heading font-black text-stone-950 tracking-tight flex items-center gap-2 group"
+          className="flex items-center gap-1.5 xs:gap-2 group select-none py-1 shrink-0"
         >
-          <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-stone-950 text-white flex items-center justify-center text-xs font-mono font-bold tracking-tighter group-hover:bg-[#c83d3d] transition-colors">
-            RM
-          </span>
-          <span className="tracking-tight">RuangMomen</span>
+          <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg sm:rounded-xl bg-gradient-to-br from-blue-500/20 via-sky-500/10 to-indigo-500/20 border border-sky-400/30 flex items-center justify-center text-sky-400 group-hover:scale-105 group-hover:border-sky-400/60 shadow-[0_0_12px_rgba(56,189,248,0.2)] transition-all duration-300">
+            <Camera className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-sky-400" />
+          </div>
+          <div className="flex flex-col text-left">
+            <span className="text-xs sm:text-sm font-heading font-extrabold tracking-tight text-white group-hover:text-sky-300 transition-colors leading-none">
+              Photobooth
+            </span>
+          </div>
         </Link>
 
-        {/* Desktop Navigation Links */}
-        <div className="hidden md:flex space-x-8 text-sm font-medium items-center">
+        {/* Navigation Links */}
+        <div className="flex items-center gap-1 xs:gap-1.5 sm:gap-2 md:gap-2.5">
+          {/* Beranda */}
           <Link
             href="/"
-            className={`transition-colors flex items-center gap-1.5 py-1 ${
+            className={`px-2.5 xs:px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-full text-[11px] sm:text-xs font-medium transition-all duration-200 flex items-center gap-1 active:scale-95 ${
               isHome
-                ? "text-stone-950 font-bold border-b-2 border-stone-950"
-                : "text-stone-600 hover:text-stone-950"
+                ? "text-white bg-white/[0.12] border border-white/20 shadow-sm"
+                : "text-stone-400 hover:text-white hover:bg-white/[0.05]"
             }`}
           >
-            <HomeIcon className="w-3.5 h-3.5" />
+            <HomeIcon className="w-3 h-3 hidden sm:inline text-sky-400" />
             <span>Beranda</span>
           </Link>
 
+          {/* Tentang */}
           <Link
             href="/about"
-            className={`transition-colors py-1 ${
+            className={`px-2.5 xs:px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-full text-[11px] sm:text-xs font-medium transition-all duration-200 flex items-center gap-1 active:scale-95 ${
               isAbout
-                ? "text-stone-950 font-bold border-b-2 border-stone-950"
-                : "text-stone-600 hover:text-stone-950"
+                ? "text-white bg-white/[0.12] border border-white/20 shadow-sm"
+                : "text-stone-400 hover:text-white hover:bg-white/[0.05]"
             }`}
           >
+            <Sparkles className="w-3 h-3 hidden sm:inline text-amber-400" />
             <span>Tentang</span>
           </Link>
 
+          {/* Studio Photobooth (Hero Action Button) */}
           <Link
             href="/booth"
-            className={`transition-colors flex items-center gap-1.5 py-1 font-semibold ${
+            className={`px-3 xs:px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full text-[11px] sm:text-xs font-semibold transition-all duration-200 flex items-center gap-1.5 active:scale-95 ${
               isBooth
-                ? "text-[#c83d3d] font-bold border-b-2 border-[#c83d3d]"
-                : "text-stone-800 hover:text-[#c83d3d]"
+                ? "text-white bg-gradient-to-r from-blue-600 via-sky-600 to-indigo-600 border border-sky-400/40 shadow-[0_0_16px_rgba(56,189,248,0.35)]"
+                : "text-sky-400 bg-sky-500/10 border border-sky-500/25 hover:bg-sky-500/20 hover:border-sky-400/50 hover:text-white shadow-[0_0_12px_rgba(56,189,248,0.15)]"
             }`}
           >
-            <Camera className="w-4 h-4 text-[#c83d3d]" />
-            <span>Studio Photobooth</span>
+            <Camera className="w-3 h-3 text-sky-300 shrink-0" />
+            <span>
+              Studio<span className="hidden sm:inline"> Photobooth</span>
+            </span>
           </Link>
 
+          {/* Kontak */}
           <Link
-            href="/#contact"
-            className="text-stone-600 hover:text-stone-950 transition-colors py-1"
+            href="/contact"
+            className={`px-2.5 xs:px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-full text-[11px] sm:text-xs font-medium transition-all duration-200 flex items-center gap-1 active:scale-95 ${
+              isContact
+                ? "text-white bg-white/[0.12] border border-white/20 shadow-sm"
+                : "text-stone-400 hover:text-white hover:bg-white/[0.05]"
+            }`}
           >
+            <Mail className="w-3 h-3 hidden sm:inline text-emerald-400" />
             <span>Kontak</span>
           </Link>
         </div>
-
-        {/* Mobile Hamburger Button */}
-        <div className="flex md:hidden items-center">
-          <button
-            type="button"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 rounded-lg text-stone-800 hover:bg-stone-200/60 transition-colors cursor-pointer"
-            aria-label="Toggle navigation menu"
-          >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
-        </div>
-      </div>
-
-      {/* Mobile Navigation Drawer */}
-      {mobileMenuOpen && (
-        <div className="md:hidden bg-[#faf8f5] border-b border-[#e8e2d8] px-4 pt-3 pb-5 animate-in slide-in-from-top-2 duration-200">
-          <div className="flex flex-col space-y-2 font-medium text-stone-800 text-sm">
-            <Link
-              href="/"
-              onClick={() => setMobileMenuOpen(false)}
-              className={`flex items-center gap-2.5 p-2.5 rounded-xl transition-colors ${
-                isHome
-                  ? "bg-stone-200/70 text-stone-950 font-bold"
-                  : "hover:bg-stone-200/50"
-              }`}
-            >
-              <HomeIcon className="w-4 h-4" />
-              <span>Beranda</span>
-            </Link>
-
-            <Link
-              href="/about"
-              onClick={() => setMobileMenuOpen(false)}
-              className={`flex items-center gap-2.5 p-2.5 rounded-xl transition-colors ${
-                isAbout
-                  ? "bg-stone-200/70 text-stone-950 font-bold"
-                  : "hover:bg-stone-200/50"
-              }`}
-            >
-              <span>Tentang RuangMomen</span>
-            </Link>
-
-            <Link
-              href="/booth"
-              onClick={() => setMobileMenuOpen(false)}
-              className={`flex items-center gap-2.5 p-2.5 rounded-xl transition-colors ${
-                isBooth
-                  ? "bg-stone-200/70 text-[#c83d3d] font-bold"
-                  : "hover:bg-stone-200/50 font-semibold text-[#c83d3d]"
-              }`}
-            >
-              <Camera className="w-4 h-4" />
-              <span>Studio Photobooth</span>
-            </Link>
-
-            <Link
-              href="/#contact"
-              onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center gap-2.5 p-2.5 rounded-xl hover:bg-stone-200/50 transition-colors"
-            >
-              <Mail className="w-4 h-4 text-stone-500" />
-              <span>Kontak & Lokasi</span>
-            </Link>
-          </div>
-        </div>
-      )}
-    </nav>
+      </nav>
+    </header>
   );
 }
