@@ -38,7 +38,7 @@ export default function ContactPage() {
       return;
     }
 
-    const phone = "6281234567890";
+    const phone = "62895370232299";
     const text = `Halo RuangMomen Photobooth! 👋\n\n*Nama:* ${formData.name.trim()}\n*Email:* ${formData.email.trim() || "-"}\n*Keperluan:* ${formData.subject}\n\n*Pesan:* \n${formData.message.trim()}`;
     const waUrl = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
 
@@ -130,7 +130,7 @@ export default function ContactPage() {
                 </p>
                 <div className="mt-3.5">
                   <a
-                    href="https://wa.me/6281234567890?text=Halo%20RuangMomen%20Studio!%20Saya%20ingin%20konsultasi%20mengenai%20photobooth."
+                    href="https://wa.me/62895370232299?text=Halo%20RuangMomen%20Studio!%20Saya%20ingin%20konsultasi%20mengenai%20photobooth."
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 text-xs font-bold text-emerald-300 bg-emerald-950/60 hover:bg-emerald-900/80 border border-emerald-500/30 px-3.5 py-2 rounded-xl transition-all duration-200 hover:-translate-y-0.5 shadow-sm"
@@ -147,10 +147,10 @@ export default function ContactPage() {
                   <Mail className="w-5 h-5" />
                 </div>
                 <h3 className="text-xs font-mono uppercase tracking-wider text-sky-400 mb-1 font-semibold">
-                  (Email)
+                  Email
                 </h3>
                 <a
-                  href="mailto:hello@ruangmomen.com"
+                  href="mailto:punimanf@gmail.com"
                   className="text-base font-bold text-white hover:text-sky-300 transition-colors block"
                 >
                   punimanf@gmail.com
@@ -309,14 +309,16 @@ export default function ContactPage() {
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
                 </a>
                 <a
-                  href="#"
+                  href="mailto:punimanf@gmail.com"
                   aria-label="Email"
                   className="w-9 h-9 rounded-lg bg-[#0e1628] border border-white/10 flex items-center justify-center hover:bg-[#15203a] hover:border-sky-400/40 transition-colors text-white"
                 >
                   <Mail className="w-4 h-4 text-sky-400" />
                 </a>
                 <a
-                  href="#"
+                  href="https://wa.me/62895370232299"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   aria-label="Phone"
                   className="w-9 h-9 rounded-lg bg-[#0e1628] border border-white/10 flex items-center justify-center hover:bg-[#15203a] hover:border-sky-400/40 transition-colors text-white"
                 >

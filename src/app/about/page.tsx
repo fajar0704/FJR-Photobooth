@@ -139,14 +139,16 @@ export default function AboutPage() {
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
                 </a>
                 <a
-                  href="#"
+                  href="mailto:punimanf@gmail.com"
                   aria-label="Email"
                   className="w-9 h-9 rounded-lg bg-[#0e1628] border border-white/10 flex items-center justify-center hover:bg-[#15203a] hover:border-sky-400/40 transition-colors text-white"
                 >
                   <Mail className="w-4 h-4 text-sky-400" />
                 </a>
                 <a
-                  href="#"
+                  href="https://wa.me/62895370232299"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   aria-label="Phone"
                   className="w-9 h-9 rounded-lg bg-[#0e1628] border border-white/10 flex items-center justify-center hover:bg-[#15203a] hover:border-sky-400/40 transition-colors text-white"
                 >
