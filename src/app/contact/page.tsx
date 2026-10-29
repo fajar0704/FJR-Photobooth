@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import {
   Mail,
   Phone,
@@ -71,61 +72,77 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#070b18] text-stone-100 overflow-x-hidden selection:bg-blue-600 selection:text-white">
+    <div className="flex flex-col min-h-screen bg-slate-50 text-slate-900 overflow-x-hidden selection:bg-blue-600 selection:text-white">
       {/* Navbar */}
       <Navbar />
 
       {/* Hero Section */}
-      <section className="relative pt-28 sm:pt-36 pb-14 sm:pb-20 border-b border-white/[0.08] bg-[#070b18] overflow-hidden">
-        {/* Overhead Studio Key Light / Blue Gradient Spotlight Beam */}
-        <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_65%_50%_at_50%_0%,_rgba(59,130,246,0.18)_0%,_rgba(37,99,235,0.04)_50%,_transparent_80%)]" />
+      <section className="relative pt-28 sm:pt-36 pb-14 sm:pb-20 border-b border-slate-200 bg-slate-950 overflow-hidden">
+        {/* Background Studio Wallpaper */}
+        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none select-none">
+          <Image
+            src="/images/studio_wallpaper.jpg"
+            alt="RuangMomen Modern Studio Wallpaper"
+            fill
+            priority
+            unoptimized
+            className="object-cover object-center opacity-85 scale-100 filter contrast-[1.08] brightness-[0.88] saturate-[1.12]"
+          />
+          {/* Cinematic Vignette */}
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(15,23,42,0.45)_0%,_rgba(15,23,42,0.85)_100%)]" />
+          {/* Top Soft Vignette under Navbar */}
+          <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black/50 via-black/15 to-transparent pointer-events-none" />
+          {/* Bottom Gradient Transition to Light Content */}
+          <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-slate-100/70 via-slate-100/40 to-transparent pointer-events-none" />
+        </div>
 
-        {/* Ambient Rim Glows */}
-        <div className="absolute -top-10 left-1/4 w-[450px] h-[350px] bg-[radial-gradient(circle_at_center,_rgba(56,189,248,0.1)_0%,_transparent_70%)] pointer-events-none blur-3xl" />
-        <div className="absolute top-1/4 -right-16 w-[500px] h-[400px] bg-[radial-gradient(circle_at_center,_rgba(99,102,241,0.15)_0%,_transparent_70%)] pointer-events-none blur-3xl" />
+        {/* Ambient Glows */}
+        <div className="absolute inset-0 pointer-events-none z-1 bg-[radial-gradient(ellipse_65%_50%_at_50%_15%,_rgba(56,189,248,0.18)_0%,_rgba(37,99,235,0.06)_50%,_transparent_80%)] animate-pulse-cyan" />
+        <div className="absolute -top-10 left-1/4 w-[450px] h-[350px] bg-[radial-gradient(circle_at_center,_rgba(56,189,248,0.15)_0%,_transparent_70%)] pointer-events-none blur-3xl z-1" />
+        <div className="absolute top-1/4 -right-16 w-[500px] h-[400px] bg-[radial-gradient(circle_at_center,_rgba(99,102,241,0.16)_0%,_transparent_70%)] pointer-events-none blur-3xl z-1" />
 
         <div className="container relative z-10 mx-auto px-4 sm:px-6 md:px-12 max-w-5xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#0c1222]/80 border border-sky-500/30 text-sky-300 text-[11px] sm:text-xs font-mono tracking-wider uppercase mb-5 sm:mb-6 shadow-sm">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/50 backdrop-blur-md border border-white/20 text-sky-300 text-[11px] sm:text-xs font-mono tracking-wider uppercase mb-5 sm:mb-6 shadow-xl">
             <span className="w-2 h-2 rounded-full bg-sky-400 animate-pulse shadow-[0_0_8px_rgba(56,189,248,0.8)]" />
             Hubungi RuangMomen • Selalu Siap Membantu
           </div>
 
-          <h1 className="text-3xl sm:text-5xl md:text-6xl font-heading font-black text-white tracking-tight leading-[1.1] mb-5 sm:mb-6">
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-heading font-black text-white tracking-tight leading-[1.1] mb-5 sm:mb-6 drop-shadow-[0_4px_24px_rgba(0,0,0,0.85)]">
             Mari Terhubung & <br />
-            <span className="bg-gradient-to-r from-sky-400 via-blue-300 to-indigo-400 bg-clip-text text-transparent font-serif italic font-normal">
+            <span className="bg-gradient-to-r from-sky-300 via-blue-400 to-indigo-300 bg-clip-text text-transparent font-serif italic font-normal drop-shadow-[0_0_35px_rgba(56,189,248,0.6)]">
               Ciptakan Kolaborasi Berkesan.
             </span>
           </h1>
 
-          <p className="text-base sm:text-lg md:text-xl text-stone-300 leading-relaxed max-w-3xl">
+          <p className="text-base sm:text-lg md:text-xl text-slate-200/90 leading-relaxed max-w-3xl drop-shadow-md">
             Punya pertanyaan mengenai fitur studio, ingin bekerja sama untuk aktivasi acara khusus, atau sekadar ingin menyapa? Tim kami selalu siap mendengar dari Anda.
           </p>
         </div>
       </section>
 
       {/* Main Contact Grid & Form Section */}
-      <section className="py-14 sm:py-24 bg-[#090e1c] flex-1 relative">
+      <section className="py-14 sm:py-24 bg-slate-100/70 border-b border-slate-200 flex-1 relative">
         <div className="container mx-auto px-4 sm:px-6 md:px-12 max-w-5xl">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
             {/* Left Column: Direct Info Cards (WhatsApp & Email) */}
             <div className="lg:col-span-5 space-y-4 sm:space-y-5">
               {/* WhatsApp Card */}
-              <div className="bg-gradient-to-b from-[#11192e]/80 to-[#0a101d]/90 backdrop-blur-md rounded-2xl p-6 border border-white/[0.08] hover:border-sky-400/50 hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(56,189,248,0.15)] transition-all duration-300 group">
-                <div className="w-10 h-10 rounded-xl bg-sky-500/10 border border-sky-500/25 flex items-center justify-center text-sky-400 group-hover:scale-110 group-hover:border-sky-400/60 transition-all duration-300 mb-4">
+              <div className="bg-white rounded-2xl p-6 border border-slate-200/90 hover:border-emerald-500 hover:-translate-y-1 hover:shadow-lg transition-all duration-300 group shadow-xs">
+                <div className="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-600 group-hover:scale-110 group-hover:border-emerald-400 transition-all duration-300 mb-4">
                   <Phone className="w-5 h-5" />
                 </div>
-                <h3 className="text-xs font-mono uppercase tracking-wider text-sky-400 mb-1 font-semibold">
+                <h3 className="text-xs font-mono uppercase tracking-wider text-emerald-700 mb-1 font-semibold">
                   WhatsApp & Telepon
                 </h3>
                 <a
                   href="https://wa.me/62895370232299"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-base font-bold text-white hover:text-sky-300 transition-colors block"
+                  className="text-base font-bold text-slate-900 hover:text-emerald-600 transition-colors block"
                 >
                   +62895370232299
                 </a>
-                <p className="text-xs text-stone-300 mt-1">
+                <p className="text-xs text-slate-600 mt-1">
                   Layanan cepat untuk keperluan event, aktivasi booth, & kerjasama.
                 </p>
                 <div className="mt-3.5">
@@ -133,7 +150,7 @@ export default function ContactPage() {
                     href="https://wa.me/62895370232299?text=Halo%20RuangMomen%20Studio!%20Saya%20ingin%20konsultasi%20mengenai%20photobooth."
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-xs font-bold text-emerald-300 bg-emerald-950/60 hover:bg-emerald-900/80 border border-emerald-500/30 px-3.5 py-2 rounded-xl transition-all duration-200 hover:-translate-y-0.5 shadow-sm"
+                    className="inline-flex items-center gap-2 text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-500 border border-emerald-600 px-3.5 py-2 rounded-xl transition-all duration-200 hover:-translate-y-0.5 shadow-sm"
                   >
                     <WhatsAppIcon className="w-3.5 h-3.5" />
                     <span>Chat WhatsApp Langsung</span>
@@ -142,16 +159,16 @@ export default function ContactPage() {
               </div>
 
               {/* Email Card */}
-              <div className="bg-gradient-to-b from-[#11192e]/80 to-[#0a101d]/90 backdrop-blur-md rounded-2xl p-6 border border-white/[0.08] hover:border-sky-400/50 hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(56,189,248,0.15)] transition-all duration-300 group">
-                <div className="w-10 h-10 rounded-xl bg-sky-500/10 border border-sky-500/25 flex items-center justify-center text-sky-400 group-hover:scale-110 group-hover:border-sky-400/60 transition-all duration-300 mb-4">
+              <div className="bg-white rounded-2xl p-6 border border-slate-200/90 hover:border-blue-500 hover:-translate-y-1 hover:shadow-lg transition-all duration-300 group shadow-xs">
+                <div className="w-10 h-10 rounded-xl bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-600 group-hover:scale-110 group-hover:border-blue-400 transition-all duration-300 mb-4">
                   <Mail className="w-5 h-5" />
                 </div>
-                <h3 className="text-xs font-mono uppercase tracking-wider text-sky-400 mb-1 font-semibold">
+                <h3 className="text-xs font-mono uppercase tracking-wider text-blue-700 mb-1 font-semibold">
                   Email
                 </h3>
                 <a
                   href="mailto:punimanf@gmail.com"
-                  className="text-base font-bold text-white hover:text-sky-300 transition-colors block"
+                  className="text-base font-bold text-slate-900 hover:text-blue-600 transition-colors block"
                 >
                   punimanf@gmail.com
                 </a>
@@ -159,26 +176,26 @@ export default function ContactPage() {
             </div>
 
             {/* Right Column: Interactive Send Message Form */}
-            <div className="lg:col-span-7 bg-[#0c1222]/90 backdrop-blur-xl rounded-3xl p-6 sm:p-8 md:p-10 border border-white/[0.08] shadow-2xl relative">
+            <div className="lg:col-span-7 bg-white rounded-3xl p-6 sm:p-8 md:p-10 border border-slate-200/90 shadow-xl relative">
               <div className="mb-6">
-                <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-md bg-sky-500/10 border border-sky-500/25 text-sky-300 text-xs font-mono uppercase tracking-wider mb-2">
-                  <MessageSquare className="w-3.5 h-3.5 text-sky-400" />
+                <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-md bg-blue-50 border border-blue-200 text-blue-700 text-xs font-mono uppercase tracking-wider mb-2">
+                  <MessageSquare className="w-3.5 h-3.5 text-blue-600" />
                   Kirim Pesan Langsung
                 </div>
-                <h2 className="text-xl sm:text-2xl md:text-3xl font-heading font-black text-white tracking-tight">
+                <h2 className="text-xl sm:text-2xl md:text-3xl font-heading font-black text-slate-900 tracking-tight">
                   Ada yang Ingin Anda Tanyakan?
                 </h2>
-                <p className="text-stone-300 text-xs sm:text-sm mt-1 leading-relaxed">
+                <p className="text-slate-600 text-xs sm:text-sm mt-1 leading-relaxed">
                   Isi formulir di bawah ini dan kami akan segera merespons Anda.
                 </p>
               </div>
 
               {isSuccess && (
-                <div className="mb-6 p-4 rounded-2xl bg-emerald-950/80 border border-emerald-500/50 text-white flex items-center gap-3 shadow-lg animate-fade-in">
-                  <CheckCircle2 className="w-5 h-5 shrink-0 text-emerald-400" />
+                <div className="mb-6 p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-900 flex items-center gap-3 shadow-sm animate-fade-in">
+                  <CheckCircle2 className="w-5 h-5 shrink-0 text-emerald-600" />
                   <div className="text-xs sm:text-sm">
-                    <p className="font-bold text-emerald-200">{successMessage || "Pesan Anda Berhasil Terkirim!"}</p>
-                    <p className="text-emerald-300/80">
+                    <p className="font-bold text-emerald-800">{successMessage || "Pesan Anda Berhasil Terkirim!"}</p>
+                    <p className="text-emerald-700">
                       Terima kasih telah menghubungi RuangMomen Studio. Kami akan segera merespons Anda.
                     </p>
                   </div>
@@ -189,7 +206,7 @@ export default function ContactPage() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {/* Name Input */}
                   <div>
-                    <label className="block text-xs font-bold text-stone-300 mb-1.5 font-mono uppercase">
+                    <label className="block text-xs font-bold text-slate-700 mb-1.5 font-mono uppercase">
                       Nama Lengkap *
                     </label>
                     <input
@@ -200,13 +217,13 @@ export default function ContactPage() {
                       onChange={(e) =>
                         setFormData({ ...formData, name: e.target.value })
                       }
-                      className="w-full px-4 py-3 rounded-xl bg-[#070c17] border border-white/10 focus:border-sky-400 focus:ring-1 focus:ring-sky-400 text-white text-sm outline-none transition-all placeholder:text-stone-500"
+                      className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:bg-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-slate-900 text-sm outline-none transition-all placeholder:text-slate-400"
                     />
                   </div>
 
                   {/* Email Input */}
                   <div>
-                    <label className="block text-xs font-bold text-stone-300 mb-1.5 font-mono uppercase">
+                    <label className="block text-xs font-bold text-slate-700 mb-1.5 font-mono uppercase">
                       Alamat Email *
                     </label>
                     <input
@@ -217,14 +234,14 @@ export default function ContactPage() {
                       onChange={(e) =>
                         setFormData({ ...formData, email: e.target.value })
                       }
-                      className="w-full px-4 py-3 rounded-xl bg-[#070c17] border border-white/10 focus:border-sky-400 focus:ring-1 focus:ring-sky-400 text-white text-sm outline-none transition-all placeholder:text-stone-500"
+                      className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:bg-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-slate-900 text-sm outline-none transition-all placeholder:text-slate-400"
                     />
                   </div>
                 </div>
 
                 {/* Subject Selector */}
                 <div>
-                  <label className="block text-xs font-bold text-stone-300 mb-1.5 font-mono uppercase">
+                  <label className="block text-xs font-bold text-slate-700 mb-1.5 font-mono uppercase">
                     Keperluan / Subjek
                   </label>
                   <select
@@ -232,7 +249,7 @@ export default function ContactPage() {
                     onChange={(e) =>
                       setFormData({ ...formData, subject: e.target.value })
                     }
-                    className="w-full px-4 py-3 rounded-xl bg-[#070c17] border border-white/10 focus:border-sky-400 focus:ring-1 focus:ring-sky-400 text-white text-sm outline-none transition-all cursor-pointer"
+                    className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:bg-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-slate-900 text-sm outline-none transition-all cursor-pointer"
                   >
                     <option value="Kerja Sama & Event">
                       Kerja Sama & Aktivasi Event
@@ -249,7 +266,7 @@ export default function ContactPage() {
 
                 {/* Message Textarea */}
                 <div>
-                  <label className="block text-xs font-bold text-stone-300 mb-1.5 font-mono uppercase">
+                  <label className="block text-xs font-bold text-slate-700 mb-1.5 font-mono uppercase">
                     Pesan Anda *
                   </label>
                   <textarea
@@ -260,7 +277,7 @@ export default function ContactPage() {
                     onChange={(e) =>
                       setFormData({ ...formData, message: e.target.value })
                     }
-                    className="w-full px-4 py-3 rounded-xl bg-[#070c17] border border-white/10 focus:border-sky-400 focus:ring-1 focus:ring-sky-400 text-white text-sm outline-none transition-all placeholder:text-stone-500 resize-none"
+                    className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:bg-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-slate-900 text-sm outline-none transition-all placeholder:text-slate-400 resize-none"
                   />
                 </div>
 
@@ -268,7 +285,7 @@ export default function ContactPage() {
                 <div className="pt-2 flex flex-col sm:flex-row gap-3">
                   <button
                     type="submit"
-                    className="flex-1 inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-xl font-bold text-sm text-white bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 transition-all shadow-lg shadow-emerald-600/20 cursor-pointer active:scale-95"
+                    className="flex-1 inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-xl font-bold text-sm text-white bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 transition-all shadow-md shadow-emerald-600/20 cursor-pointer active:scale-95"
                   >
                     <WhatsAppIcon className="w-4 h-4" />
                     <span>Kirim via WhatsApp</span>
@@ -277,7 +294,7 @@ export default function ContactPage() {
                     type="button"
                     disabled={isSubmitting}
                     onClick={handleSendEmail}
-                    className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-bold text-sm text-white bg-gradient-to-r from-blue-600 via-sky-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 transition-all shadow-lg shadow-blue-500/25 cursor-pointer active:scale-95 disabled:opacity-50"
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-bold text-sm text-white bg-gradient-to-r from-blue-600 via-sky-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 transition-all shadow-md shadow-blue-500/25 cursor-pointer active:scale-95 disabled:opacity-50"
                   >
                     <Send className="w-4 h-4" />
                     <span>{isSubmitting ? "Mengirim..." : "Kirim Formulir"}</span>
@@ -290,63 +307,63 @@ export default function ContactPage() {
       </section>
 
       {/* Footer */}
-      <footer id="contact" className="bg-[#050814] text-stone-300 pt-16 sm:pt-20 pb-10 sm:pb-12 border-t border-white/[0.08]">
+      <footer id="contact" className="bg-slate-100 text-slate-600 pt-16 sm:pt-20 pb-10 sm:pb-12 border-t border-slate-200">
         <div className="container mx-auto px-4 sm:px-6 md:px-12">
           <div className="flex flex-col sm:flex-row justify-between items-start gap-8 sm:gap-12 mb-12 sm:mb-16">
             <div className="max-w-md">
-              <div className="text-2xl font-heading font-bold text-white mb-4 flex items-center gap-2.5">
+              <div className="text-2xl font-heading font-bold text-slate-900 mb-4 flex items-center gap-2.5">
                 <span>RuangMomen</span>
               </div>
-              <p className="text-stone-400 max-w-md mb-6 sm:mb-8 leading-relaxed text-xs sm:text-sm">
+              <p className="text-slate-600 max-w-md mb-6 sm:mb-8 leading-relaxed text-xs sm:text-sm">
                 Studio photobooth digital dengan standar visual analog modern. Abadikan senyum dan keceriaan kapan saja tanpa batas langsung dari perangkat Anda.
               </p>
               <div className="flex space-x-3">
                 <a
                   href="#"
                   aria-label="Instagram"
-                  className="w-9 h-9 rounded-lg bg-[#0e1628] border border-white/10 flex items-center justify-center hover:bg-[#15203a] hover:border-sky-400/40 transition-colors text-white text-xs"
+                  className="w-9 h-9 rounded-lg bg-white border border-slate-200 flex items-center justify-center hover:bg-slate-50 hover:border-blue-400 transition-colors text-slate-700 shadow-xs"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
                 </a>
                 <a
                   href="mailto:punimanf@gmail.com"
                   aria-label="Email"
-                  className="w-9 h-9 rounded-lg bg-[#0e1628] border border-white/10 flex items-center justify-center hover:bg-[#15203a] hover:border-sky-400/40 transition-colors text-white"
+                  className="w-9 h-9 rounded-lg bg-white border border-slate-200 flex items-center justify-center hover:bg-slate-50 hover:border-blue-400 transition-colors text-blue-600 shadow-xs"
                 >
-                  <Mail className="w-4 h-4 text-sky-400" />
+                  <Mail className="w-4 h-4 text-blue-600" />
                 </a>
                 <a
                   href="https://wa.me/62895370232299"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Phone"
-                  className="w-9 h-9 rounded-lg bg-[#0e1628] border border-white/10 flex items-center justify-center hover:bg-[#15203a] hover:border-sky-400/40 transition-colors text-white"
+                  className="w-9 h-9 rounded-lg bg-white border border-slate-200 flex items-center justify-center hover:bg-slate-50 hover:border-blue-400 transition-colors text-emerald-600 shadow-xs"
                 >
-                  <Phone className="w-4 h-4 text-sky-400" />
+                  <Phone className="w-4 h-4 text-emerald-600" />
                 </a>
               </div>
             </div>
 
             <div className="sm:text-right">
-              <h4 className="text-xs sm:text-sm font-bold text-white uppercase tracking-wider font-mono mb-4">Navigasi</h4>
-              <ul className="space-y-2.5 sm:space-y-3 text-stone-400 text-xs sm:text-sm">
+              <h4 className="text-xs sm:text-sm font-bold text-slate-900 uppercase tracking-wider font-mono mb-4">Navigasi</h4>
+              <ul className="space-y-2.5 sm:space-y-3 text-slate-600 text-xs sm:text-sm">
                 <li>
-                  <Link href="/" className="hover:text-white transition-colors">
+                  <Link href="/" className="hover:text-blue-600 transition-colors">
                     Beranda (Home)
                   </Link>
                 </li>
                 <li>
-                  <Link href="/about" className="hover:text-white transition-colors">
+                  <Link href="/about" className="hover:text-blue-600 transition-colors">
                     Tentang RuangMomen
                   </Link>
                 </li>
                 <li>
-                  <Link href="/booth" className="hover:text-white transition-colors flex items-center sm:justify-end gap-1.5 font-medium text-stone-200">
-                    <Camera className="w-3.5 h-3.5 text-sky-400" /> Full Screen Studio
+                  <Link href="/booth" className="hover:text-blue-600 transition-colors flex items-center sm:justify-end gap-1.5 font-medium text-slate-800">
+                    <Camera className="w-3.5 h-3.5 text-blue-600" /> Full Screen Studio
                   </Link>
                 </li>
                 <li>
-                  <Link href="/contact" className="hover:text-white transition-colors text-white font-medium">
+                  <Link href="/contact" className="hover:text-blue-600 transition-colors text-blue-600 font-semibold">
                     Kontak & Lokasi
                   </Link>
                 </li>
@@ -354,11 +371,11 @@ export default function ContactPage() {
             </div>
           </div>
 
-          <div className="border-t border-white/[0.08] pt-6 sm:pt-8 flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-4 text-[11px] sm:text-xs text-stone-500">
+          <div className="border-t border-slate-200 pt-6 sm:pt-8 flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-4 text-[11px] sm:text-xs text-slate-500">
             <p>© 2026 RuangMomen Photobooth. All rights reserved.</p>
             <div className="flex gap-4 sm:gap-6">
-              <a href="#" className="hover:text-stone-300 transition-colors">Privasi</a>
-              <a href="#" className="hover:text-stone-300 transition-colors">Syarat & Ketentuan</a>
+              <a href="#" className="hover:text-slate-800 transition-colors">Privasi</a>
+              <a href="#" className="hover:text-slate-800 transition-colors">Syarat & Ketentuan</a>
             </div>
           </div>
         </div>

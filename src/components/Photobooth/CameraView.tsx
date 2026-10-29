@@ -152,9 +152,9 @@ export default function CameraView({
   }, [countdown, captureFrame]);
 
   return (
-    <div className="relative w-full max-w-4xl mx-auto rounded-3xl overflow-hidden bg-black shadow-2xl border border-[#2a2725] transition-all">
+    <div className="relative w-full max-w-4xl mx-auto rounded-3xl p-1 sm:p-1.5 bg-white shadow-xl border border-slate-200 transition-all">
       {/* Aspect Ratio Container (4:3 camera frame) */}
-      <div className="relative w-full aspect-[4/3] bg-zinc-950 flex items-center justify-center overflow-hidden">
+      <div className="relative w-full aspect-[4/3] rounded-2xl bg-zinc-950 flex items-center justify-center overflow-hidden border border-slate-900/60">
         {/* Viewfinder Framing Corner Brackets */}
         <div className="absolute inset-4 sm:inset-6 pointer-events-none z-10 opacity-70">
           <div className="absolute top-0 left-0 w-5 h-5 border-t-2 border-l-2 border-white/80 rounded-tl-sm shadow-xs" />
@@ -268,18 +268,18 @@ export default function CameraView({
 
         {/* Camera Permission / Fallback State */}
         {hasPermission === false && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center z-30 bg-zinc-950/95 backdrop-blur-md">
-            <div className="w-14 h-14 rounded-xl bg-stone-800 text-stone-300 flex items-center justify-center mb-4 border border-stone-700">
-              <AlertCircle className="w-7 h-7 text-sky-400" />
+          <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center z-30 bg-slate-50/98 backdrop-blur-md">
+            <div className="w-14 h-14 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center mb-4 border border-blue-200 shadow-sm">
+              <AlertCircle className="w-7 h-7 text-blue-600" />
             </div>
-            <h3 className="text-lg font-bold text-white mb-2">Akses Kamera Belum Diberikan</h3>
-            <p className="text-zinc-400 text-xs md:text-sm max-w-md mb-6 leading-relaxed">
+            <h3 className="text-lg font-bold text-slate-900 mb-2">Akses Kamera Belum Diberikan</h3>
+            <p className="text-slate-600 text-xs md:text-sm max-w-md mb-6 leading-relaxed">
               {errorMessage || "Izinkan browser mengakses kamera Anda, atau gunakan foto demo di bawah ini untuk mencoba kustomisasi strip."}
             </p>
             <div className="flex flex-wrap items-center justify-center gap-3">
               <button
                 onClick={() => startCamera()}
-                className="px-5 py-2.5 rounded-lg bg-white hover:bg-stone-200 text-stone-950 font-bold text-xs flex items-center gap-2 transition-all cursor-pointer"
+                className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs flex items-center gap-2 transition-all cursor-pointer shadow-md shadow-blue-500/20"
               >
                 <RefreshCw className="w-3.5 h-3.5" />
                 Coba Kamera Lagi
@@ -287,16 +287,16 @@ export default function CameraView({
               {onUseDemoPhotos && (
                 <button
                   onClick={onUseDemoPhotos}
-                  className="px-5 py-2.5 rounded-lg bg-stone-800 hover:bg-stone-700 text-white font-medium text-xs flex items-center gap-2 transition-all border border-stone-700 cursor-pointer"
+                  className="px-5 py-2.5 rounded-xl bg-white hover:bg-slate-100 text-slate-800 font-medium text-xs flex items-center gap-2 transition-all border border-slate-300 shadow-xs cursor-pointer"
                 >
-                  <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                  <Sparkles className="w-3.5 h-3.5 text-amber-500" />
                   Gunakan Foto Demo
                 </button>
               )}
               {onUploadPhotos && (
                 <button
                   onClick={() => fileInputRef.current?.click()}
-                  className="px-5 py-2.5 rounded-lg bg-stone-900 hover:bg-stone-800 text-stone-300 font-medium text-xs flex items-center gap-2 transition-all border border-stone-800 cursor-pointer"
+                  className="px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium text-xs flex items-center gap-2 transition-all border border-slate-200 cursor-pointer"
                 >
                   <Upload className="w-3.5 h-3.5" />
                   Upload Foto Sendiri

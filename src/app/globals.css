@@ -1,13 +1,13 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0e0d0c;
-  --foreground: #faf8f5;
-  --primary: #3b82f6;
-  --secondary: #24211f;
-  --surface: #181615;
-  --surface-warm: #1e1c1a;
-  --border: #2a2725;
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --primary: #2563eb;
+  --secondary: #f1f5f9;
+  --surface: #ffffff;
+  --surface-warm: #f8fafc;
+  --border: #e2e8f0;
 }
 
 @theme inline {
@@ -21,26 +21,31 @@
 
 html {
   scroll-behavior: smooth;
-  color-scheme: dark;
+  color-scheme: light;
+  overflow-x: hidden;
+  max-width: 100vw;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  max-width: 100vw;
+  width: 100%;
 }
 
-/* Custom dark studio accents */
+/* Custom studio accents - light theme */
 .bg-warm-canvas {
-  background-color: #0e0d0c;
+  background-color: #f8fafc;
 }
 
 .bg-surface-card {
-  background-color: #181615;
+  background-color: #ffffff;
 }
 
 .border-subtle {
-  border-color: #2a2725;
+  border-color: #e2e8f0;
 }
 
 /* Smooth keyframe animations */
@@ -283,18 +288,18 @@ body {
   pointer-events: none;
 }
 
-/* Glassmorphism & studio glows */
+/* Glassmorphism & studio glows - light theme */
 .glass-panel {
-  background: rgba(12, 16, 28, 0.85);
+  background: rgba(255, 255, 255, 0.88);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(226, 232, 240, 0.8);
 }
 
 .glow-subtle-cyan {
-  box-shadow: 0 0 35px -8px rgba(56, 189, 248, 0.35);
+  box-shadow: 0 10px 30px -5px rgba(56, 189, 248, 0.25);
 }
 
 .glow-subtle-card {
-  box-shadow: 0 12px 35px -10px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  box-shadow: 0 10px 30px -8px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.04);
 }

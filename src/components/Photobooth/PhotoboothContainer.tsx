@@ -194,10 +194,10 @@ export default function PhotoboothContainer() {
             {phase === "review" ? "✓" : "1"}
           </div>
           <div>
-            <p className="text-xs font-bold text-stone-100">
+            <p className="text-xs font-bold text-slate-900">
               {phase === "review" ? "Foto Selesai" : "Pengambilan Foto"}
             </p>
-            <p className="text-[10px] sm:text-[11px] text-stone-400 font-mono">
+            <p className="text-[10px] sm:text-[11px] text-slate-500 font-mono">
               {phase === "capturing"
                 ? `Foto ${currentShotIndex + 1} dari ${settings.photoCount}`
                 : phase === "review"
@@ -207,7 +207,7 @@ export default function PhotoboothContainer() {
           </div>
         </div>
 
-        <div className="w-16 sm:w-28 h-1.5 bg-[#1b2233] rounded-full overflow-hidden border border-white/5">
+        <div className="w-16 sm:w-28 h-1.5 bg-slate-200 rounded-full overflow-hidden border border-slate-300/60">
           <div
             className="h-full bg-gradient-to-r from-blue-600 via-sky-500 to-indigo-600 transition-all duration-500"
             style={{
@@ -226,14 +226,14 @@ export default function PhotoboothContainer() {
             className={`w-7 h-7 rounded-xl flex items-center justify-center font-bold text-xs shadow-sm ${
               phase === "review"
                 ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-blue-500/25 border border-sky-400/30"
-                : "bg-[#141824] text-stone-400 border border-[#252d3d]"
+                : "bg-slate-100 text-slate-500 border border-slate-200"
             }`}
           >
             2
           </div>
           <div className="text-right">
-            <p className="text-xs font-bold text-stone-100">Kustomisasi</p>
-            <p className="text-[10px] sm:text-[11px] text-stone-400 font-mono">Frame & Unduh</p>
+            <p className="text-xs font-bold text-slate-900">Kustomisasi</p>
+            <p className="text-[10px] sm:text-[11px] text-slate-500 font-mono">Frame & Unduh</p>
           </div>
         </div>
       </div>
