@@ -1,0 +1,67 @@
+{
+  "name": "RuangMomen Photobooth",
+  "short_name": "RuangMomen",
+  "description": "Studio photobooth digital berkualitas profesional langsung dari browser Anda.",
+  "start_url": "/",
+  "id": "/",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#2563eb",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "id",
+  "dir": "ltr",
+  "categories": ["photo", "entertainment", "lifestyle"],
+  "icons": [
+    {
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-maskable-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icons/icon-maskable-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Buka Studio Photobooth",
+      "short_name": "Studio",
+      "description": "Mulai foto studio langsung dari kamera Anda",
+      "url": "/booth",
+      "icons": [
+        {
+          "src": "/icons/icon-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Tentang RuangMomen",
+      "short_name": "Tentang",
+      "url": "/about",
+      "icons": [
+        {
+          "src": "/icons/icon-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ]
+}
+
